@@ -1,0 +1,30 @@
+name: "Release"
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "LICENSE"
+      - "CHANGELOG.md"
+      - "CODEOWNERS"
+    tags-ignore:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency: release
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+        fetch-depth: 0
+
+    - name: Python Semantic Release
+      uses: python-semantic-release/python-semantic-release@master
+      with:
+        github_token: ${{ secrets.TAGGING_TOKEN }}

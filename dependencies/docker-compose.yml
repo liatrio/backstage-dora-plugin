@@ -1,0 +1,68 @@
+version: '3.8'
+
+x-default-logging: &logging
+  driver: 'json-file'
+  options:
+    max-size: '5m'
+    max-file: '2'
+
+services:
+  liatrio-dora-api:
+    image: ghcr.io/liatrio/liatrio-dora-api:v1.1.13
+    platform: linux/amd64
+    ports:
+      - "${PORT:-3030}:3030"
+    env_file: .env
+
+  loki:
+    image: grafana/loki:3.0.1
+    platform: linux/amd64
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - loki_data:/loki
+    environment:
+      LOKI_STORAGE_PATH: /loki
+
+  promtail:
+    image: grafana/promtail:2.9.1
+    platform: linux/amd64
+    volumes:
+      - /var/log:/var/log
+      - ./promtail-config.yaml:/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yaml
+
+  otelcol:
+    image: ghcr.io/liatrio/liatrio-otel-collector:0.61.0-arm64
+    deploy:
+      resources:
+        limits:
+          memory: 125M
+    env_file: .env
+    restart: unless-stopped
+    command: ['--config=/etc/otelcol-config.yml']
+    volumes:
+      - ./otelcol-config.yml:/etc/otelcol-config.yml
+    ports:
+      - '4317:4317' # OTLP over gRPC receiver
+      - '4318:4318' # OTLP over HTTP receiver
+      - '8088:8088' # OTLP over HTTP receiver
+    logging:
+      *logging
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    # if you are running as root then set it to 0
+    # else find the right id with the id -u command
+    user: '0'
+    ports:
+      - '3000:3000'
+    # adding the mount volume point which we create earlier
+    volumes:
+      - '$PWD/data:/var/lib/grafana'
+
+volumes:
+  loki_data:
