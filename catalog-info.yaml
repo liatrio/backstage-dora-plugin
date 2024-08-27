@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-liatrio-dora-plugin
+  annotations:
+    github.com/project-slug: liatrio/backstage-liatrio-dora-plugin
+spec:
+  type: other
+  lifecycle: unknown
+  owner: backstage-foundations

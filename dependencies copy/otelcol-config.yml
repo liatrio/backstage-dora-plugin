@@ -1,0 +1,247 @@
+---
+extensions:
+  health_check:
+
+  pprof:
+    endpoint: 0.0.0.0:1777
+
+  zpages:
+    endpoint: 0.0.0.0:55679
+
+receivers:
+  ## Webhookevent receiver is used to connect to a GitHub App and receive json event logs
+  ## The processors are used to extract/filter all the meaningful data from those logs
+  webhookevent:
+    endpoint: 0.0.0.0:8088
+    path: /events
+    health_path: /healthcheck
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 75
+    spike_limit_percentage: 15
+
+  batch:
+    send_batch_size: 100
+    timeout: 10s
+
+  transform/timestamp:
+    error_mode: propagate
+    log_statements:
+      - context: log
+        statements:
+          - set(time_unix_nano, UnixNano(Time(attributes["created_at"], "%FT%TZ"))) where attributes["created_at"] != nil
+
+  transform/team_name:
+    log_statements:
+      - context: log
+        statements:
+          - set(attributes["team_name"], body["repository"]["custom_properties"]["team_name"]) where body["repository"]["custom_properties"]["team_name"] != nil
+
+  ############################################
+  # GitHub Issue Events
+  ############################################
+  transform/body:
+    log_statements:
+      - context: log
+        statements:
+          - set(body, ParseJSON(body)) where body != nil
+
+  transform/issue:
+    log_statements:
+      - context: log
+        statements:
+          - keep_keys(body, ["issue", "action", "resources", "instrumentation_scope", "repository"])
+          - keep_keys(body["repository"], ["name", "full_name", "owner", "topics", "custom_properties"]) where body["repository"] != nil
+          - keep_keys(body["repository"]["owner"], ["login"]) where body["repository"]["owner"] != nil
+          - keep_keys(body["issue"], ["created_at", "closed_at", "labels", "number", "repository_url", "state"]) where body["issue"] != nil
+          - set(attributes["repository_name"], body["repository"]["name"]) where body["repository"]["name"] != nil
+          - set(attributes["repository_owner"], body["repository"]["owner"]["login"]) where body["repository"]["owner"]["login"] != nil
+          - set(attributes["action"], body["action"]) where body["action"] != nil
+          - set(attributes["created_at"], body["issue"]["created_at"]) where body["issue"]["created_at"] != nil
+          - set(attributes["closed_at"], body["issue"]["closed_at"]) where body["issue"]["closed_at"] != nil
+          - set(attributes["topics"], body["repository"]["topics"]) where body["repository"]["topics"] != nil
+          - set(attributes["environment_name"], body["deployment"]["environment"]) where body["deployment"]["environment"] != nil
+
+  transform/issue-closed:
+    log_statements:
+      - context: log
+        statements:
+          - set(attributes["created_at"], attributes["closed_at"]) where attributes["closed_at"] != nil
+
+
+  attributes/issues:
+    actions:
+      - action: upsert
+        key: loki.attribute.labels
+        value: action, issue_labels, topics, team_name, repository_name
+
+  filter/issues:
+    error_mode: ignore
+    logs:
+      log_record:
+        - 'not IsMatch(body["issue"], ".*")'
+        - 'IsMatch(body["action"], "closed")'
+
+  filter/issues-closed:
+    error_mode: ignore
+    logs:
+      log_record:
+        - 'not IsMatch(body["issue"], ".*")'
+        - 'not IsMatch(body["action"], "closed")'
+
+  ############################################
+  # GitHub Action Deployment Events
+  ############################################
+  transform/deployments:
+    log_statements:
+      - context: log
+        statements:
+          - keep_keys(body, ["deployment", "deployment_status", "workflow", "workflow_run", "repository"])
+          - keep_keys(body["deployment"], ["url", "id", "task", "environment", "created_at", "updated_at", "sha", "ref"]) where body["deployment"] != nil
+          - keep_keys(body["deployment_status"], ["state", "url", "environment", "created_at"]) where body["deployment_status"] != nil
+          - keep_keys(body["workflow"], ["name", "path", "url"]) where body["workflow"] != nil
+          - keep_keys(body["workflow_run"], ["head_branch", "head_sha", "display_title", "run_number", "status", "workflow_id", "url", "id", "html_url"]) where body["workflow_run"] != nil
+          - keep_keys(body["repository"], ["name", "full_name", "owner", "topics", "custom_properties"]) where body["repository"] != nil
+          - keep_keys(body["repository"]["owner"], ["login"]) where body["repository"]["owner"] != nil
+          - set(attributes["repository_name"], body["repository"]["name"]) where body["repository"]["name"] != nil
+          - set(attributes["repository_owner"], body["repository"]["owner"]["login"]) where body["repository"]["owner"]["login"] != nil
+          - set(attributes["topics"], body["repository"]["topics"]) where body["repository"]["topics"] != nil
+          - set(attributes["created_at"], body["deployment_status"]["created_at"]) where body["deployment_status"]["created_at"] != nil
+          - set(attributes["deployment_state"], body["deployment_status"]["state"]) where body["deployment_status"]["state"] != nil
+          - set(attributes["deployment_environment"], body["deployment"]["environment"]) where body["deployment"]["environment"] != nil
+          - set(attributes["environment_name"], body["deployment"]["environment"]) where body["deployment"]["environment"] != nil
+          - set(body["deployment"]["created_at"], body["deployment_status"]["created_at"]) where body["deployment_status"]["created_at"] != nil
+
+  attributes/deployments:
+    actions:
+      - action: upsert
+        key: loki.attribute.labels
+        value: deployment_state, deployment_environment, topics, team_name, repository_name, environment_name
+
+  filter/deployments:
+    error_mode: ignore
+    logs:
+      log_record:
+        - 'not IsMatch(body["deployment"], ".*")'
+
+  ############################################
+  # GitHub Pull Request Events
+  ############################################
+
+  transform/pull_requests:
+    log_statements:
+      - context: log
+        statements:
+          - keep_keys(body, ["action", "pull_request", "number", "resources", "instrumentation_scope", "repository"])
+          - keep_keys(body["pull_request"], ["title", "user", "created_at", "merged_at", "merged", "merge_commit_sha"]) where body["pull_request"] != nil
+          - keep_keys(body["pull_request"]["user"], ["login"]) where body["pull_request"]["user"] != nil
+          - keep_keys(body["repository"], ["name", "full_name", "owner", "topics", "custom_properties"]) where body["repository"] != nil
+          - set(attributes["repository_name"], body["repository"]["name"]) where body["repository"]["name"] != nil
+          - set(attributes["action"], body["action"]) where body["action"] != nil
+          - set(attributes["created_at"], body["pull_request"]["merged_at"]) where body["pull_request"]["merged_at"] != nil
+          - set(attributes["merged_at"], body["pull_request"]["merged_at"]) where body["pull_request"]["merged_at"] != nil
+          - set(attributes["merge_sha"], body["pull_request"]["merge_commit_sha"]) where body["pull_request"]["merge_commit_sha"] != nil
+          - set(attributes["topics"], body["repository"]["topics"]) where body["repository"]["topics"] != nil
+          - set(attributes["environment_name"], body["deployment"]["environment"]) where body["deployment"]["environment"] != nil
+          - set(body["pull_request"]["created_at"], body["deployment_status"]["merged_at"]) where body["deployment_status"]["merged_at"] != nil
+
+  filter/pull_requests:
+    error_mode: ignore
+    logs:
+      log_record:
+        - 'not IsMatch(body["pull_request"], ".*")'
+
+  attributes/pull_requests:
+    actions:
+      - action: upsert
+        key: loki.attribute.labels
+        # value: action, created_at, merged_at, merge_sha, topics, team_name, repository_name
+        value: action, merged_at, topics, repository_name, team_name
+
+exporters:
+  debug:
+    verbosity: detailed
+    sampling_initial: 2
+    sampling_thereafter: 500
+
+  otlphttp:
+    endpoint: http://loki:3100/otlp
+    tls:
+      insecure: true
+
+  loki:
+    endpoint: 'http://loki:3100/loki/api/v1/push'
+
+service:
+  telemetry:
+    logs:
+      level: debug
+
+  extensions:
+    - health_check
+    - pprof
+    - zpages
+
+  pipelines:
+    logs/issues:
+      receivers:
+        - webhookevent
+      processors:
+        - transform/body
+        - filter/issues
+        - transform/issue
+        - transform/team_name
+        - attributes/issues
+        - transform/timestamp
+      exporters:
+        - debug
+        - otlphttp
+        - loki
+
+    logs/issues-closed:
+      receivers:
+        - webhookevent
+      processors:
+        - transform/body
+        - filter/issues-closed
+        - transform/issue
+        - transform/issue-closed
+        - transform/team_name
+        - attributes/issues
+        - transform/timestamp
+      exporters:
+        - debug
+        - otlphttp
+        - loki
+
+    logs/gha-deployments:
+      receivers:
+        - webhookevent
+      processors:
+        - transform/body
+        - filter/deployments
+        - transform/deployments
+        - transform/team_name
+        - attributes/deployments
+        - transform/timestamp
+      exporters:
+        - debug
+        - otlphttp
+        - loki
+
+    logs/pull-requests:
+      receivers:
+        - webhookevent
+      processors:
+        - transform/body
+        - filter/pull_requests
+        - transform/pull_requests
+        - transform/team_name
+        - attributes/pull_requests
+        - transform/timestamp
+      exporters:
+        - debug
+        - otlphttp
+        - loki
