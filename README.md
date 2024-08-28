@@ -46,9 +46,9 @@ It has two different modes `Team View` and `Component View`:
 - `Team View` - You will see this when you access the `DORA Metrics` sidebar navigation.
 
 Here are some examples:
-| Component Metric View | Component Overall Trend View | Team Overall Trend View |
-|-------------|------------|------------|
-| ![Metrics](/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](/screenshots/trend/tab.png?raw=true 'Trend') | ![Trend](/screenshots/trend/teamView.png?raw=true 'Trend') |
+| Component View | Team View |
+|-------------|------------|
+| ![Metrics](/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](/screenshots/trend/teamView.png?raw=true 'Trend') |
 
 # Dependencies
 
