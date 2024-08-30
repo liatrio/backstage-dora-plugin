@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 import { InfoCard } from '@backstage/core-components';
 import { Box } from '@material-ui/core';
 import {
@@ -7,6 +8,7 @@ import {
   MetricThresholdSet,
   getDateDaysInPastUtc,
   fetchData,
+  Theme,
 } from 'react-dora-charts';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
@@ -31,6 +33,8 @@ export const AtAGlance = () => {
 
   const [data, setData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
+  const backstageTheme = useTheme();
+  const theme = backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
   const getAuthHeaderValue = genAuthHeaderValueLookup();
 
@@ -77,12 +81,14 @@ export const AtAGlance = () => {
       info="You DORA Trend, week over week, for the period selected"
     />
   );
+
   const bTitle = (
     <ChartTitle
       title="DORA: 30 Days At a Glance"
       info="How well you are doing in each of the DORA Metrics"
     />
   );
+
 
   return (
     <InfoCard title={showTrendGraph ? tTitle : bTitle}>
@@ -103,6 +109,7 @@ export const AtAGlance = () => {
                   graphEnd={endDate}
                   metricThresholdSet={rankThresholds}
                   message={message}
+                  theme={theme}
                 />
               ) : (
                 <Board
@@ -114,6 +121,7 @@ export const AtAGlance = () => {
                   graphEnd={endDate}
                   metricThresholdSet={rankThresholds}
                   message={message}
+                  theme={theme}
                 />
               )}
             </div>

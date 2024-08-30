@@ -11317,9 +11317,9 @@ react-dev-utils@^12.0.0-next.60:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-"react-dora-charts@https://github.com/liatrio/react-dora-charts/releases/download/v1.0.0/react-dora-charts-1.0.0.tgz":
-  version "1.0.0"
-  resolved "https://github.com/liatrio/react-dora-charts/releases/download/v1.0.0/react-dora-charts-1.0.0.tgz#812ba8b128b695da4dbad2e3f148502f400dd831"
+"react-dora-charts@https://github.com/liatrio/react-dora-charts/releases/download/v1.1.0/react-dora-charts-1.1.0.tgz":
+  version "1.1.0"
+  resolved "https://github.com/liatrio/react-dora-charts/releases/download/v1.1.0/react-dora-charts-1.1.0.tgz#874dc1925a5daf66a7ad2434fda7c63dc26d5cbf"
   dependencies:
     react-tooltip "^5.28.0"
     recharts "^2.12.7"
