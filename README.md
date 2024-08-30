@@ -4,7 +4,7 @@
 
 # Introduction
 
-This is a plugin for the [BackStage](https://backstage.io/) Project that provides a seamless way to display DORA Metrics in your developer portals.
+This is a plugin for the [Backstage](https://backstage.io/) Project that provides a seamless way to display DORA Metrics in your developer portals.
 
 Our goal is to provide an Open Source plugin that works with the Open Telemetry backend collecting your DORA metrics in a non-opinionated manner.
 
@@ -90,7 +90,7 @@ You can do this by setting up a new `Webhook` and configuring the `Webhook` to s
 - Pull Requests
 - Deployment Statuses
 
-# Installation into BackStage
+# Installation into Backstage
 
 To Install this plugin you'll need to do the following:
 
