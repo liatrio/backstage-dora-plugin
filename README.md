@@ -80,7 +80,7 @@ If you have a Kubernetes Cluster, we have a quick start guide that installs `Lok
 
 This quick start manifest does not set up the [Liatrio DORA API](https://github.com/liatrio/liatrio-dora-api) or any other API which you would need to sit between this plugin and the Loki DB.
 
-## Congifuring GitHub
+## Configuring GitHub
 
 Once you have the dependencies configured and running, you will need to update your GitHub Organization to send events to the OTEL Collector.
 
