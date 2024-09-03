@@ -4,7 +4,7 @@
 
 # Introduction
 
-This is a plugin for the [Backstage](https://backstage.io/) Project that provides a seamless way to display DORA Metrics in your developer portals.
+This is a plugin for the [Backstage](https://backstage.io/) Project that provides a seamless way to display [DORA Metrics](https://dora.dev/guides/dora-metrics-four-keys/) in your developer portals.
 
 Our goal is to provide an Open Source plugin that works with the Open Telemetry backend collecting your DORA metrics in a non-opinionated manner.
 
