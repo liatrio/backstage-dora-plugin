@@ -79,6 +79,7 @@ export const AtAGlance = () => {
     <ChartTitle
       title="DORA: 30 Days At a Glance"
       info="You DORA Trend, week over week, for the period selected"
+      theme={theme}
     />
   );
 
@@ -86,6 +87,7 @@ export const AtAGlance = () => {
     <ChartTitle
       title="DORA: 30 Days At a Glance"
       info="How well you are doing in each of the DORA Metrics"
+      theme={theme}
     />
   );
 

@@ -36,23 +36,23 @@ import 'react-dropdown/style.css';
 const useStyles = makeStyles((theme) => ({
   doraCalendar: {
     '& .react-datepicker__header': {
-      backgroundColor: theme.palette.background,
+      backgroundColor: theme.palette.background.default,
     },
     '& .react-datepicker__month-container': {
-      backgroundColor: theme.palette.background,
+      backgroundColor: theme.palette.background.default,
     },
     '& .react-datepicker__current-month': {
-      color: theme.palette.text,
+      color: theme.palette.text.primary,
     },
     '& .react-datepicker__day': {
-      backgroundColor: theme.palette.background,
-      color: theme.palette.text,
+      backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
       '&:hover': {
         backgroundColor: 'rgb(92, 92, 92)',
       },
     },
     '& .react-datepicker__day-name': {
-      color: theme.palette.text,
+      color: theme.palette.text.primary,
     },
     '& .react-datepicker__day--in-range': {
       backgroundColor: 'green',
@@ -61,8 +61,8 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     '& .react-datepicker__input-container input': {
-      backgroundColor: theme.palette.background,
-      color: theme.palette.text,
+      backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
       padding: '10px',
     },
     '& .react-datepicker': {
@@ -80,23 +80,23 @@ const useStyles = makeStyles((theme) => ({
       width: '50%',
     },
     '& .Dropdown-control': {
-      backgroundColor: theme.palette.background,
+      backgroundColor: theme.palette.background.default,
       color: 'white',
     },
     '& .Dropdown-option is-selected': {
       backgroundColor: 'green',
-      color: theme.palette.text,
+      color: theme.palette.text.primary,
     },
     '& .Dropdown-option': {
-      backgroundColor: theme.palette.background,
-      color: theme.palette.text,
+      backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
     },
     '& .Dropdown-option:hover': {
       backgroundColor: 'green',
-      color: theme.palette.text,
+      color: theme.palette.text.primary,
     },
     '& .Dropdown-menu': {
-      backgroundColor: theme.palette.background,
+      backgroundColor: theme.palette.background.default,
     },
     '& .doraOptions': {
       overflow: 'visible',
@@ -203,7 +203,7 @@ export const Charts = (props: ChartProps) => {
     end?: Date,
     message?: string
   ) => {
-    if (!data && data.length < 1) {
+    if (!data || data.length < 1) {
       setData([]);
       setMetrics({ ...defaultMetrics });
       setMessage('');
@@ -441,7 +441,7 @@ export const Charts = (props: ChartProps) => {
           maxWidth: '300px',
           padding: '10px',
           zIndex: '100',
-          backgroundColor: backstageTheme.palette.backgroundColor,
+          backgroundColor: backstageTheme.palette.background.default,
         }}
       />
       <Grid

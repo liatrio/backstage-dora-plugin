@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 export const ChartTitle = (props: Props) => {
   const classes = useStyles();
 
-  const color = props.theme !== Theme.Dark ? '#FFF' : '#000'
+  const color = props.theme !== Theme.Dark ? '#000' : '#FFF'
 
   return (
     <>
