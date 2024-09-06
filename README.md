@@ -92,11 +92,17 @@ You can do this by setting up a new `Webhook` and configuring the `Webhook` to s
 
 # Installation into Backstage
 
+## Scripted Installation
+
+If you have not made major modifications to your Backstage code base, you can install this plugin using the `install.sh` script supplied in this repository
+
+## Manual Installation
+
 To Install this plugin you'll need to do the following:
 
 1. Install the `backstage-dora-plugin` package into the `/packages/app` folder
 
-    ```
+    ```sh
     npm install https://github.com/liatrio/backstage-dora-plugin/releases/download/v1.0.0/backstage-dora-plugin-v1.0.0.tgz
 
     yarn add backstage-dora-plugin@https://github.com/liatrio/backstage-dora-plugin/releases/download/v1.0.0/backstage-dora-plugin-v1.0.0.tgz
@@ -106,13 +112,13 @@ To Install this plugin you'll need to do the following:
 
     - Add this to your imports:
 
-    ```
+    ```ts
     import { EntityDORACharts } from 'backstage-dora-plugin';
     ```
 
     - Add this into the `FlatRoutes` element as a child:
 
-    ```
+    ```ts
     <Route path="/dora" element={<EntityDORACharts showTeamSelection />} />
     ```
 
@@ -120,7 +126,7 @@ To Install this plugin you'll need to do the following:
 
     - Add this to your imports:
 
-    ```
+    ```ts
     import {
     EntityDORACharts,
     EntityDORAAtAGlance,
@@ -129,7 +135,7 @@ To Install this plugin you'll need to do the following:
 
     - Define this constant:
 
-    ```
+    ```ts
     const doraContent = (
     <Grid container spacing={3} alignItems="stretch">
       {entityWarningContent}
@@ -140,7 +146,7 @@ To Install this plugin you'll need to do the following:
 
     - Add this into the `serviceEntityPage`, `websiteEntityPage`, `defaultEntityPage` `EntityLayoutWrapper` elements:
 
-    ```
+    ```ts
     <EntityLayout.Route path="/dora" title="DORA">
       {doraContent}
     </EntityLayout.Route>
@@ -148,17 +154,24 @@ To Install this plugin you'll need to do the following:
 
     - Add this into the `overviewContent` `Grid`:
 
-    ```
+    ```ts
     <Grid item md={6}>
       <EntityDORAAtAGlance />
     </Grid>
     ```
+4. Update the `packages/app/src/components/Root/Root.tsx` file:
 
-4. Update the `app-config.yaml`:
+  - Add this to the `<Sidebar>` or a `<SidebarGroup>`:
+
+    ```ts
+    <SidebarItem icon={DoraLogo} to="dora" text="Dora Metrics" />
+    ```
+
+5. Update the `app-config.yaml` file:
 
     - Add this to the `proxy.endpoints` and use the correct URL for your API:
 
-    ```
+    ```yaml
     /dora/api:
       target: [URL_TO_DORA_API]
     ```
