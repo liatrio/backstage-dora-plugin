@@ -2282,6 +2282,16 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz#4fc56c15c580b9adb7dc3c333a134e540b44bfb1"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
+"@liatrio/react-dora-charts@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@liatrio/react-dora-charts/-/react-dora-charts-1.1.3.tgz#feb601faff0e9c77728361f0b397e7f483288c65"
+  integrity sha512-LV0adf4y7NFSv0ZLsbTk22NuLwBHBVPJQ7l0p9hkfDOpZsR/x0SDuXpUGuvDIfU0FTkMMTxH8TIR4sbthh1GwQ==
+  dependencies:
+    js-yaml "^4.1.0"
+    react-tooltip "^5.28.0"
+    recharts "^2.12.7"
+    uuid "^10.0.0"
+
 "@manypkg/find-root@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@manypkg/find-root/-/find-root-1.1.0.tgz#a62d8ed1cd7e7d4c11d9d52a8397460b5d4ad29f"
