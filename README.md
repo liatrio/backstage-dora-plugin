@@ -30,6 +30,7 @@ Depending on how you have set up your configuration for this plugin, it will sho
   - There is an option to also show each DORA Metric as a line on the graph, a legend will appear in this case
 
 Here are some examples:
+
 | Metric View with Details Always Showing | Metric View with Details on Hover |
 |-------------|-----|
 | ![Metrics](/screenshots/ranked/atAGlance.png?raw=true 'Metrics') | ![Metrics](/screenshots/ranked/atAGlance_hover.png?raw=true 'Metrics') |
@@ -46,6 +47,7 @@ It has two different modes `Team View` and `Component View`:
 - `Team View` - You will see this when you access the `DORA Metrics` sidebar navigation.
 
 Here are some examples:
+
 | Component View | Team View |
 |-------------|------------|
 | ![Metrics](/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](/screenshots/trend/teamView.png?raw=true 'Trend') |

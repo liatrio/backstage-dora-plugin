@@ -4,7 +4,6 @@
   "main": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "license": "Apache-2.0",
-  "private": true,
   "publishConfig": {
     "access": "public",
     "main": "dist/index.esm.js",
@@ -16,6 +15,10 @@
     "pluginPackages": [
       "backstage-dora-plugin"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liatrio/backstage-dora-plugin.git"
   },
   "configSchema": "config.d.ts",
   "sideEffects": false,
@@ -58,7 +61,8 @@
   "files": [
     "dist",
     "src",
-    "config.d.ts"
+    "config.d.ts",
+    "LICENSE"
   ],
   "module": "./dist/index.esm.js"
 }
