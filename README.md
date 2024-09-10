@@ -33,11 +33,11 @@ Here are some examples:
 
 | Metric View with Details Always Showing | Metric View with Details on Hover |
 |-------------|-----|
-| ![Metrics](/screenshots/ranked/atAGlance.png?raw=true 'Metrics') | ![Metrics](/screenshots/ranked/atAGlance_hover.png?raw=true 'Metrics') |
+| ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/atAGlance.png 'Metrics') | ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/atAGlance_hover.png?raw=true 'Metrics') |
 
 | Overall Trend View | Overall Trend View with Individual Metric Trends |
 |-------------|-----|
-| ![Trend](/screenshots/trend/atAGlance.png?raw=true 'Trend') | ![Trend](/screenshots/trend/atAGlanceIndividual.png?raw=true 'Trend') ||
+| ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/atAGlance.png?raw=true 'Trend') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/atAGlanceIndividual.png?raw=true 'Trend') ||
 
 ## `Charts`
 This is a set of charts that for the DORA metrics.
@@ -50,7 +50,7 @@ Here are some examples:
 
 | Component View | Team View |
 |-------------|------------|
-| ![Metrics](/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](/screenshots/trend/teamView.png?raw=true 'Trend') |
+| ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/teamView.png?raw=true 'Trend') |
 
 # Dependencies
 
