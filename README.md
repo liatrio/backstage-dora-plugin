@@ -99,9 +99,9 @@ To Install this plugin you'll need to do the following:
 1. Install the `backstage-dora-plugin` package into the `/packages/app` folder
 
     ```
-    npm install https://github.com/liatrio/backstage-dora-plugin/releases/download/v1.0.0/backstage-dora-plugin-v1.0.0.tgz
+    npm install @liatrio/backstage-dora-plugin
 
-    yarn add backstage-dora-plugin@https://github.com/liatrio/backstage-dora-plugin/releases/download/v1.0.0/backstage-dora-plugin-v1.0.0.tgz
+    yarn add @liatrio/backstage-dora-plugin
     ```
 
 2. Update the `/packages/app/src/App.tsx` file:
