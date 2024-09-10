@@ -98,7 +98,7 @@ To Install this plugin you'll need to do the following:
 
 1. Install the `backstage-dora-plugin` package into the `/packages/app` folder
 
-    ```
+    ```shell
     npm install @liatrio/backstage-dora-plugin
 
     yarn add @liatrio/backstage-dora-plugin
@@ -108,13 +108,13 @@ To Install this plugin you'll need to do the following:
 
     - Add this to your imports:
 
-    ```
+    ```typescript
     import { EntityDORACharts } from 'backstage-dora-plugin';
     ```
 
     - Add this into the `FlatRoutes` element as a child:
 
-    ```
+    ```typescript
     <Route path="/dora" element={<EntityDORACharts showTeamSelection />} />
     ```
 
@@ -122,7 +122,7 @@ To Install this plugin you'll need to do the following:
 
     - Add this to your imports:
 
-    ```
+    ```typescript
     import {
     EntityDORACharts,
     EntityDORAAtAGlance,
@@ -131,7 +131,7 @@ To Install this plugin you'll need to do the following:
 
     - Define this constant:
 
-    ```
+    ```typescript
     const doraContent = (
     <Grid container spacing={3} alignItems="stretch">
       {entityWarningContent}
@@ -142,7 +142,7 @@ To Install this plugin you'll need to do the following:
 
     - Add this into the `serviceEntityPage`, `websiteEntityPage`, `defaultEntityPage` `EntityLayoutWrapper` elements:
 
-    ```
+    ```typescript
     <EntityLayout.Route path="/dora" title="DORA">
       {doraContent}
     </EntityLayout.Route>
@@ -150,7 +150,7 @@ To Install this plugin you'll need to do the following:
 
     - Add this into the `overviewContent` `Grid`:
 
-    ```
+    ```typescript
     <Grid item md={6}>
       <EntityDORAAtAGlance />
     </Grid>
@@ -160,7 +160,7 @@ To Install this plugin you'll need to do the following:
 
     - Add this to the `proxy.endpoints` and use the correct URL for your API:
 
-    ```
+    ```yaml
     /dora/api:
       target: [URL_TO_DORA_API]
     ```
