@@ -16,7 +16,7 @@ import {
   DoraState,
   getDateDaysInPastUtc,
   DoraRecord,
-} from 'react-dora-charts';
+} from '@liatrio/react-dora-charts';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
 import {

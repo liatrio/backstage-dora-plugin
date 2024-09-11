@@ -2282,6 +2282,18 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz#4fc56c15c580b9adb7dc3c333a134e540b44bfb1"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
+"@liatrio/react-dora-charts@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@liatrio/react-dora-charts/-/react-dora-charts-1.1.4.tgz#c80acf857f450b685939c985250e480bb04d5eea"
+  integrity sha512-ztz3/ItjgtEUXW1K9YBYT4fm8sbiYlE0rELF3Xk0qeOvzUhzv3c5Gen9TQDqfwbCrr77KupKVUtkyduveMgQTg==
+  dependencies:
+    js-yaml "^4.1.0"
+    react-tooltip "^5.28.0"
+    recharts "^2.12.7"
+    uuid "^10.0.0"
+  optionalDependencies:
+    "@rollup/rollup-linux-x64-gnu" "4.18.0"
+
 "@manypkg/find-root@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@manypkg/find-root/-/find-root-1.1.0.tgz#a62d8ed1cd7e7d4c11d9d52a8397460b5d4ad29f"
@@ -2998,6 +3010,11 @@
   version "4.21.1"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-s390x-gnu/-/rollup-linux-s390x-gnu-4.21.1.tgz#daa2b62a6e6f737ebef6700a12a93c9764e18583"
   integrity sha512-z/9rtlGd/OMv+gb1mNSjElasMf9yXusAxnRDrBaYB+eS1shFm6/4/xDH1SAISO5729fFKUkJ88TkGPRUh8WSAA==
+
+"@rollup/rollup-linux-x64-gnu@4.18.0":
+  version "4.18.0"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.18.0.tgz#1a7481137a54740bee1ded4ae5752450f155d942"
+  integrity sha512-xuglR2rBVHA5UsI8h8UbX4VJ470PtGCf5Vpswh7p2ukaqBGFTnsfzxUBetoWBWymHMxbIG0Cmx7Y9qDZzr648w==
 
 "@rollup/rollup-linux-x64-gnu@4.21.1":
   version "4.21.1"
@@ -11321,14 +11338,6 @@ react-dev-utils@^12.0.0-next.60:
     shell-quote "^1.7.3"
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
-
-"react-dora-charts@https://github.com/liatrio/react-dora-charts/releases/download/v1.0.0/react-dora-charts-1.0.0.tgz":
-  version "1.0.0"
-  resolved "https://github.com/liatrio/react-dora-charts/releases/download/v1.0.0/react-dora-charts-1.0.0.tgz#812ba8b128b695da4dbad2e3f148502f400dd831"
-  dependencies:
-    react-tooltip "^5.28.0"
-    recharts "^2.12.7"
-    uuid "^10.0.0"
 
 react-double-scrollbar@0.0.15:
   version "0.0.15"
