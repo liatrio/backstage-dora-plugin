@@ -1,6 +1,6 @@
 {
-  "name": "@liatrio/testing-backstage-dora-plugin",
-  "version": "1.0.2",
+  "name": "@liatrio/backstage-dora-plugin",
+  "version": "0.0.0",
   "main": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "license": "Apache-2.0",
@@ -18,7 +18,7 @@
     "role": "frontend-plugin",
     "pluginId": "dora-metrics",
     "pluginPackages": [
-      "@liatrio/testing-backstage-dora-plugin"
+      "@liatrio/backstage-dora-plugin"
     ]
   },
   "repository": {
