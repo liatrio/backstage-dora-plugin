@@ -34,7 +34,10 @@
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
     "prepack": "backstage-cli package prepack",
-    "postpack": "backstage-cli package postpack"
+    "postpack": "backstage-cli package postpack",
+    "prettier:check": "npx --yes prettier --check .",
+    "prettier:fix": "npx --yes prettier --write .",
+    "tsc:full": "tsc --skipLibCheck true --incremental false"
   },
   "dependencies": {
     "@backstage/core-components": "^0.14.3",
@@ -54,6 +57,7 @@
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
+    "@spotify/prettier-config": "^15.0.0",
     "@backstage/cli": "^0.26.0",
     "@backstage/core-app-api": "^1.12.3",
     "@backstage/dev-utils": "^1.0.26",
@@ -70,5 +74,6 @@
     "LICENSE"
   ],
   "module": "./dist/index.esm.js",
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
+  "prettier": "@spotify/prettier-config"
 }

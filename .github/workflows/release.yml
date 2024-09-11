@@ -12,9 +12,14 @@ on:
       - '*'
 
 jobs:
+  code-validation:
+    uses: ./.github/workflows/code_validation.yml
+
   release:
+    needs: [code-validation]
     runs-on: ubuntu-latest
     concurrency: release
+
     permissions:
       id-token: write
       contents: write
