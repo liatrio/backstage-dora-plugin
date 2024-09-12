@@ -1,4 +1,4 @@
-name: 'CodeQL'
+name: CodeQL Scanner
 
 on:
   push:
@@ -14,13 +14,10 @@ jobs:
       security-events: write
       packages: read
 
-    strategy:
-      fail-fast: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
@@ -30,4 +27,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: '/language:${{matrix.language}}'
+          category: '/language:javascript-typescript'
