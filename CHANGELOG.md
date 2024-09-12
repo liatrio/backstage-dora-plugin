@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.0.2 (2024-09-12)
+
+### Fix
+
+* fix: address styling bugs (#19) ([`7bc5b9b`](https://github.com/liatrio/backstage-dora-plugin/commit/7bc5b9b3c8696df27bc92662a42120ccd0170372))
+
 ## v1.0.1 (2024-09-11)
 
 ### Chore
