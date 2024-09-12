@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 import { InfoCard } from '@backstage/core-components';
 import { Box } from '@material-ui/core';
 import {
@@ -7,11 +8,13 @@ import {
   MetricThresholdSet,
   getDateDaysInPastUtc,
   fetchData,
+  Theme,
 } from '@liatrio/react-dora-charts';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
 import { genAuthHeaderValueLookup, getRepositoryName } from '../helper';
 import { ChartTitle } from './ChartTitle';
+import { Tooltip } from 'react-tooltip';
 
 export const AtAGlance = () => {
   const entity = useEntity();
@@ -31,6 +34,8 @@ export const AtAGlance = () => {
 
   const [data, setData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
+  const backstageTheme = useTheme();
+  const theme = backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
   const getAuthHeaderValue = genAuthHeaderValueLookup();
 
@@ -75,17 +80,32 @@ export const AtAGlance = () => {
     <ChartTitle
       title="DORA: 30 Days At a Glance"
       info="You DORA Trend, week over week, for the period selected"
+      theme={theme}
     />
   );
   const bTitle = (
     <ChartTitle
       title="DORA: 30 Days At a Glance"
       info="How well you are doing in each of the DORA Metrics"
+      theme={theme}
     />
   );
 
   return (
     <InfoCard title={showTrendGraph ? tTitle : bTitle}>
+      <Tooltip
+        id="metric_tooltip"
+        place="bottom"
+        border={`1px solid ${theme === Theme.Dark ? '#FFF' : '#000'}`}
+        opacity="1"
+        style={{
+          borderRadius: '10px',
+          maxWidth: '300px',
+          padding: '10px',
+          zIndex: '100',
+          backgroundColor: backstageTheme.palette.background.default,
+        }}
+      />
       <Box position="relative">
         <Box display="flex" justifyContent="flex-end">
           {repositoryName === '' ? (
@@ -103,6 +123,7 @@ export const AtAGlance = () => {
                   graphEnd={endDate}
                   metricThresholdSet={rankThresholds}
                   message={message}
+                  theme={theme}
                 />
               ) : (
                 <Board
@@ -114,6 +135,7 @@ export const AtAGlance = () => {
                   graphEnd={endDate}
                   metricThresholdSet={rankThresholds}
                   message={message}
+                  theme={theme}
                 />
               )}
             </div>
