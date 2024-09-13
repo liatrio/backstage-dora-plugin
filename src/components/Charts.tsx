@@ -33,7 +33,7 @@ import { ChartTitle } from './ChartTitle';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   doraCalendar: {
     '& .react-datepicker__header': {
       backgroundColor: theme.palette.background.default,
@@ -137,11 +137,11 @@ export const Charts = (props: ChartProps) => {
   const teamsList = configApi.getOptional('dora.teams') as string[];
   const showTrendGraph = configApi.getOptionalBoolean('dora.showTrendGraph');
   const showIndividualTrends = configApi.getOptionalBoolean(
-    'dora.showIndividualTrends'
+    'dora.showIndividualTrends',
   );
   const daysToFetch = configApi.getNumber('dora.daysToFetch');
   const rankThresholds = configApi.getOptional(
-    'dora.rankThresholds'
+    'dora.rankThresholds',
   ) as MetricThresholdSet;
 
   const getAuthHeaderValue = genAuthHeaderValueLookup();
@@ -161,10 +161,10 @@ export const Charts = (props: ChartProps) => {
   const [startDate, setStartDate] = useState<Date>(getDateDaysInPast(30));
   const [endDate, setEndDate] = useState<Date>(getDateDaysInPast(0));
   const [calendarStartDate, setCalendarStartDate] = useState<Date>(
-    getDateDaysInPast(30)
+    getDateDaysInPast(30),
   );
   const [calendarEndDate, setCalendarEndDate] = useState<Date>(
-    getDateDaysInPast(0)
+    getDateDaysInPast(0),
   );
   const [loading, setLoading] = useState<boolean>(true);
   const [metrics, setMetrics] = useState<DoraState>({ ...defaultMetrics });
@@ -172,7 +172,8 @@ export const Charts = (props: ChartProps) => {
 
   const classes = useStyles();
   const backstageTheme = useTheme();
-  const theme = backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
+  const theme =
+    backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
   const getMetrics = (data: any) => {
     if (!data || data.length === 0) {
@@ -191,7 +192,7 @@ export const Charts = (props: ChartProps) => {
       },
       data,
       startDate,
-      endDate
+      endDate,
     );
 
     setMetrics(metrics);
@@ -201,7 +202,7 @@ export const Charts = (props: ChartProps) => {
     data: any,
     start?: Date,
     end?: Date,
-    message?: string
+    message?: string,
   ) => {
     if (!data || data.length < 1) {
       setData([]);
@@ -256,15 +257,15 @@ export const Charts = (props: ChartProps) => {
         updateData(data, undefined, undefined, '');
         setLoading(false);
       },
-      (_) => {
+      _ => {
         setLoading(false);
-      }
+      },
     );
   };
 
   const updateTeam = async (value: any) => {
     const newIndex = teams.findIndex(
-      (range: { value: string; label: string }) => range.label === value.label
+      (range: { value: string; label: string }) => range.label === value.label,
     );
 
     setTeamIndex(newIndex);
@@ -355,9 +356,9 @@ export const Charts = (props: ChartProps) => {
                 setTeams(newList);
                 setLoading(false);
               },
-              (_) => {
+              _ => {
                 setLoading(false);
-              }
+              },
             );
           }
         }

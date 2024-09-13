@@ -3,7 +3,7 @@ import { useApi, identityApiRef } from '@backstage/core-plugin-api';
 export const getRepositoryName = (e: any): string => {
   if ('github.com/project-slug' in e.entity.metadata.annotations) {
     return e.entity.metadata.annotations['github.com/project-slug'].split(
-      '/'
+      '/',
     )[1];
   } else {
     return '';
@@ -28,7 +28,7 @@ export const fetchTeams = async (
   url: string,
   getAuthHeaderValue: () => Promise<string | undefined>,
   onSuccess: (data: any) => void,
-  onFailure?: (data: any) => void
+  onFailure?: (data: any) => void,
 ) => {
   if (!url) {
     return;

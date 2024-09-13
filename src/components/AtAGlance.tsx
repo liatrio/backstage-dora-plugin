@@ -25,17 +25,18 @@ export const AtAGlance = () => {
   const includeWeekends = configApi.getOptionalBoolean('dora.includeWeekends');
   const showDetails = configApi.getOptionalBoolean('dora.showDetails');
   const rankThresholds = configApi.getOptional(
-    'dora.rankThresholds'
+    'dora.rankThresholds',
   ) as MetricThresholdSet;
   const showTrendGraph = configApi.getOptionalBoolean('dora.showTrendGraph');
   const showIndividualTrends = configApi.getOptionalBoolean(
-    'dora.showIndividualTrends'
+    'dora.showIndividualTrends',
   );
 
   const [data, setData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const backstageTheme = useTheme();
-  const theme = backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
+  const theme =
+    backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
   const getAuthHeaderValue = genAuthHeaderValueLookup();
 
@@ -67,9 +68,9 @@ export const AtAGlance = () => {
           setData(data);
           setLoading(false);
         },
-        (_) => {
+        _ => {
           setLoading(false);
-        }
+        },
       );
     };
 
