@@ -247,9 +247,7 @@ export const Charts = (props: ChartProps) => {
   };
 
   const callFetchData = async (idx: number, repo: string) => {
-    const fetchOptions = makeFetchOptions(teams[idx]?.value, [
-      repo,
-    ]);
+    const fetchOptions = makeFetchOptions(teams[idx]?.value, [repo]);
 
     setLoading(true);
 
@@ -466,7 +464,10 @@ export const Charts = (props: ChartProps) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <label htmlFor="select-date-range" style={{ paddingRight: '10px' }}>
+                <label
+                  htmlFor="select-date-range"
+                  style={{ paddingRight: '10px' }}
+                >
                   Select Date Range:
                 </label>
                 <div className={classes.doraCalendar}>
