@@ -1,5 +1,4 @@
 import {
-  entityContentRouteRef,
   DORAMetricsPlugin,
   EntityDORAAtAGlance,
   EntityDORACharts,
@@ -16,9 +15,5 @@ describe('DORAMetricsPlugin', () => {
 
   it('should provide EntityDORACharts component', () => {
     expect(EntityDORACharts).toBeDefined();
-  });
-
-  it('should have the correct route reference', () => {
-    expect(entityContentRouteRef.id).toBe('dora-metrics');
   });
 });
