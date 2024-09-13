@@ -9,9 +9,9 @@ export const getRepositoryName = (e: any): string => {
     return e.entity.metadata.annotations['github.com/project-slug'].split(
       '/',
     )[1];
-  } else {
-    return '';
   }
+
+  return '';
 };
 
 export const genAuthHeaderValueLookup = () => {
@@ -22,9 +22,9 @@ export const genAuthHeaderValueLookup = () => {
 
     if (obj.token) {
       return `Bearer ${obj.token}`;
-    } else {
-      return undefined;
     }
+
+    return undefined;
   };
 };
 
@@ -60,7 +60,7 @@ export const fetchTeams = async (
     const response = await fetch(url, options);
     const json = await response.text();
 
-    let parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json);
 
     onSuccess(parsedData);
   } catch (error) {

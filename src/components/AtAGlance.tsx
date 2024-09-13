@@ -56,8 +56,8 @@ export const AtAGlance = () => {
       return;
     }
 
-    let fetch = async () => {
-      let fetchOptions: any = {
+    const fetch = async () => {
+      const fetchOptions: any = {
         api: apiUrl,
         getAuthHeaderValue: getAuthHeaderValue,
         start: getDateDaysInPastUtc(daysToFetch),
@@ -69,8 +69,8 @@ export const AtAGlance = () => {
 
       await fetchData(
         fetchOptions,
-        (data: any) => {
-          setData(data);
+        (respData: any) => {
+          setData(respData);
           setLoading(false);
         },
         _ => {

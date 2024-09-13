@@ -177,13 +177,13 @@ export const Charts = (props: ChartProps) => {
   const theme =
     backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
-  const getMetrics = (data: any) => {
-    if (!data || data.length === 0) {
+  const getMetrics = (respData: any) => {
+    if (!respData || respData.length === 0) {
       setMetrics({ ...defaultMetrics });
       return;
     }
 
-    const metrics = buildDoraStateForPeriod(
+    const metricsData = buildDoraStateForPeriod(
       {
         data: [],
         metricThresholdSet: rankThresholds,
@@ -192,32 +192,32 @@ export const Charts = (props: ChartProps) => {
         graphEnd: endDate,
         graphStart: startDate,
       },
-      data,
+      respData,
       startDate,
       endDate,
     );
 
-    setMetrics(metrics);
+    setMetrics(metricsData);
   };
 
   const updateData = (
-    data: any,
+    respData: any,
     start?: Date,
     end?: Date,
-    message?: string,
+    msg?: string,
   ) => {
-    if (!data || data.length < 1) {
+    if (!respData || respData.length < 1) {
       setData([]);
       setMetrics({ ...defaultMetrics });
       setMessage('');
     } else {
-      setData(data);
+      setData(respData);
     }
 
-    getMetrics(data);
+    getMetrics(respData);
 
-    if (message !== undefined) {
-      setMessage(message);
+    if (msg !== undefined) {
+      setMessage(msg);
     }
 
     if (start) {
@@ -230,7 +230,7 @@ export const Charts = (props: ChartProps) => {
   };
 
   const makeFetchOptions = (team?: string, repositories?: string[]) => {
-    let fetchOptions: any = {
+    const fetchOptions: any = {
       api: apiUrl,
       getAuthHeaderValue: getAuthHeaderValue,
       start: getDateDaysInPast(daysToFetch),
@@ -246,17 +246,17 @@ export const Charts = (props: ChartProps) => {
     return fetchOptions;
   };
 
-  const callFetchData = async (teamIndex: number, repository: string) => {
-    const fetchOptions = makeFetchOptions(teams[teamIndex]?.value, [
-      repository,
+  const callFetchData = async (idx: number, repo: string) => {
+    const fetchOptions = makeFetchOptions(teams[idx]?.value, [
+      repo,
     ]);
 
     setLoading(true);
 
     await fetchData(
       fetchOptions,
-      (data: any) => {
-        updateData(data, undefined, undefined, '');
+      (respData: any) => {
+        updateData(respData, undefined, undefined, '');
         setLoading(false);
       },
       _ => {
@@ -319,10 +319,10 @@ export const Charts = (props: ChartProps) => {
       }
     }
 
-    let fetch = props.showTeamSelection
+    const fetch = props.showTeamSelection
       ? async () => {
           if (teamsList && teamsList.length > 0) {
-            let teamsEntires = [
+            const teamEntries = [
               {
                 value: '',
                 label: 'Please Select',
@@ -330,7 +330,7 @@ export const Charts = (props: ChartProps) => {
             ];
 
             for (const team of teamsList) {
-              teamsEntires.push({
+              teamEntries.push({
                 value: team,
                 label: team,
               });
@@ -338,16 +338,16 @@ export const Charts = (props: ChartProps) => {
 
             setMessage('Please select a Team');
             setLoading(false);
-            setTeams(teamsEntires);
+            setTeams(teamEntries);
           } else {
             fetchTeams(
               teamListUrl,
               getAuthHeaderValue,
               (teams_data: any) => {
-                let newList: any[] = [{ label: 'Please Select', value: '' }];
+                const newList: any[] = [{ label: 'Please Select', value: '' }];
 
-                for (var entry of teams_data.teams) {
-                  let newEntry = {
+                for (const entry of teams_data.teams) {
+                  const newEntry = {
                     label: entry,
                     value: entry,
                   };
@@ -380,7 +380,7 @@ export const Charts = (props: ChartProps) => {
   const tTitle = (
     <ChartTitle
       title="DORA: At a Glance"
-      info="You DORA Trend, week over week, for the period selected"
+      info="Your DORA Trend, week over week, for the period selected"
       theme={theme}
     />
   );
@@ -466,11 +466,12 @@ export const Charts = (props: ChartProps) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <label style={{ paddingRight: '10px' }}>
+                <label htmlFor="select-date-range" style={{ paddingRight: '10px' }}>
                   Select Date Range:
                 </label>
                 <div className={classes.doraCalendar}>
                   <DatePicker
+                    id="select-date-range"
                     selected={calendarStartDate}
                     onChange={updateDateRange}
                     startDate={calendarStartDate}
@@ -504,7 +505,7 @@ export const Charts = (props: ChartProps) => {
           <InfoCard
             title={showTrendGraph ? tTitle : bTitle}
             className="doraCard"
-            noPadding={true}
+            noPadding
           >
             <Box position="relative">
               <Box display="flex" justifyContent="flex-end">
