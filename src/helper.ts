@@ -1,5 +1,9 @@
 import { useApi, identityApiRef } from '@backstage/core-plugin-api';
 
+export const COLOR_GREEN = '#24ae1d';
+export const COLOR_DARK = '#000';
+export const COLOR_LIGHT = '#FFF';
+
 export const getRepositoryName = (e: any): string => {
   if ('github.com/project-slug' in e.entity.metadata.annotations) {
     return e.entity.metadata.annotations['github.com/project-slug'].split(

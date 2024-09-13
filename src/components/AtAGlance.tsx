@@ -12,7 +12,12 @@ import {
 } from '@liatrio/react-dora-charts';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
-import { genAuthHeaderValueLookup, getRepositoryName } from '../helper';
+import {
+  COLOR_DARK,
+  COLOR_LIGHT,
+  genAuthHeaderValueLookup,
+  getRepositoryName,
+} from '../helper';
 import { ChartTitle } from './ChartTitle';
 import { Tooltip } from 'react-tooltip';
 
@@ -97,7 +102,7 @@ export const AtAGlance = () => {
       <Tooltip
         id="metric_tooltip"
         place="bottom"
-        border={`1px solid ${theme === Theme.Dark ? '#FFF' : '#000'}`}
+        border={`1px solid ${theme === Theme.Dark ? COLOR_LIGHT : COLOR_DARK}`}
         opacity="1"
         style={{
           borderRadius: '10px',

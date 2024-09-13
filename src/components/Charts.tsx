@@ -22,6 +22,8 @@ import {
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
 import {
+  COLOR_DARK,
+  COLOR_LIGHT,
   fetchTeams,
   genAuthHeaderValueLookup,
   getRepositoryName,
@@ -435,7 +437,7 @@ export const Charts = (props: ChartProps) => {
       <Tooltip
         id="metric_tooltip"
         place="bottom"
-        border={`1px solid ${theme === Theme.Dark ? '#FFF' : '#000'}`}
+        border={`1px solid ${theme === Theme.Dark ? COLOR_LIGHT : COLOR_DARK}`}
         opacity="1"
         style={{
           borderRadius: '10px',
