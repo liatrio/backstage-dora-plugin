@@ -1,11 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import {
-  ChartTitle,
-  Props,
-} from './ChartTitle';
+import { ChartTitle, Props } from './ChartTitle';
 import { Theme } from '@liatrio/react-dora-charts';
-import {COLOR_DARK, COLOR_GREEN, COLOR_LIGHT} from "../helper";
+import { COLOR_DARK, COLOR_GREEN, COLOR_LIGHT } from '../helper';
 
 describe('ChartTitle', () => {
   const defaultProps: Props = {
