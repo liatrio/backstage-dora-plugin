@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '@mui/material/styles';
 import { InfoCard } from '@backstage/core-components';
 import { Box, Grid } from '@material-ui/core';
 import { Tooltip } from 'react-tooltip';
@@ -16,6 +17,7 @@ import {
   DoraState,
   getDateDaysInPastUtc,
   DoraRecord,
+  Theme,
 } from '@liatrio/react-dora-charts';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
@@ -31,26 +33,26 @@ import { ChartTitle } from './ChartTitle';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   doraCalendar: {
     '& .react-datepicker__header': {
-      backgroundColor: 'black',
+      backgroundColor: theme.palette.background.default,
     },
     '& .react-datepicker__month-container': {
-      backgroundColor: 'black',
+      backgroundColor: theme.palette.background.default,
     },
     '& .react-datepicker__current-month': {
-      color: 'white',
+      color: theme.palette.text.primary,
     },
     '& .react-datepicker__day': {
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
       '&:hover': {
         backgroundColor: 'rgb(92, 92, 92)',
       },
     },
     '& .react-datepicker__day-name': {
-      color: 'white',
+      color: theme.palette.text.primary,
     },
     '& .react-datepicker__day--in-range': {
       backgroundColor: 'green',
@@ -59,8 +61,8 @@ const useStyles = makeStyles(() => ({
       },
     },
     '& .react-datepicker__input-container input': {
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
       padding: '10px',
     },
     '& .react-datepicker': {
@@ -78,23 +80,23 @@ const useStyles = makeStyles(() => ({
       width: '50%',
     },
     '& .Dropdown-control': {
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
     },
     '& .Dropdown-option is-selected': {
       backgroundColor: 'green',
-      color: 'black',
+      color: theme.palette.text.primary,
     },
     '& .Dropdown-option': {
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
     },
     '& .Dropdown-option:hover': {
       backgroundColor: 'green',
-      color: 'white',
+      color: theme.palette.text.primary,
     },
     '& .Dropdown-menu': {
-      backgroundColor: 'black',
+      backgroundColor: theme.palette.background.default,
     },
     '& .doraOptions': {
       overflow: 'visible',
@@ -169,6 +171,8 @@ export const Charts = (props: ChartProps) => {
   const [message, setMessage] = useState<string>('');
 
   const classes = useStyles();
+  const backstageTheme = useTheme();
+  const theme = backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
   const getMetrics = (data: any) => {
     if (!data || data.length === 0) {
@@ -199,7 +203,7 @@ export const Charts = (props: ChartProps) => {
     end?: Date,
     message?: string
   ) => {
-    if (!data && data.length < 1) {
+    if (!data || data.length < 1) {
       setData([]);
       setMetrics({ ...defaultMetrics });
       setMessage('');
@@ -374,12 +378,14 @@ export const Charts = (props: ChartProps) => {
     <ChartTitle
       title="DORA: At a Glance"
       info="You DORA Trend, week over week, for the period selected"
+      theme={theme}
     />
   );
   const bTitle = (
     <ChartTitle
       title="DORA: At a Glance"
       info="How well you are doing in each of the DORA Metrics"
+      theme={theme}
     />
   );
   const dfTitle = (
@@ -388,6 +394,7 @@ export const Charts = (props: ChartProps) => {
       color={metrics.deploymentFrequency.color}
       title="Deployment Frequency"
       info="How often an organization successfully releases to production"
+      theme={theme}
     />
   );
   const cfrTitle = (
@@ -396,6 +403,7 @@ export const Charts = (props: ChartProps) => {
       color={metrics.changeFailureRate.color}
       title="Change Failure Rate"
       info="The percentage of deployments causing a failure in production"
+      theme={theme}
     />
   );
   const cltTitle = (
@@ -404,6 +412,7 @@ export const Charts = (props: ChartProps) => {
       color={metrics.changeLeadTime.color}
       title="Change Lead Time"
       info="The amount of time it takes a commit to get into production"
+      theme={theme}
     />
   );
   const rtTitle = (
@@ -412,6 +421,7 @@ export const Charts = (props: ChartProps) => {
       color={metrics.recoverTime.color}
       title="Recovery Time"
       info="How long it takes an organization to recover from a failure in production"
+      theme={theme}
     />
   );
 
@@ -424,14 +434,14 @@ export const Charts = (props: ChartProps) => {
       <Tooltip
         id="metric_tooltip"
         place="bottom"
-        border="1px solid white"
+        border={`1px solid ${theme === Theme.Dark ? '#FFF' : '#000'}`}
         opacity="1"
         style={{
           borderRadius: '10px',
           maxWidth: '300px',
           padding: '10px',
           zIndex: '100',
-          backgroundColor: '#000000',
+          backgroundColor: backstageTheme.palette.background.default,
         }}
       />
       <Grid
@@ -511,6 +521,7 @@ export const Charts = (props: ChartProps) => {
                       graphEnd={endDate}
                       metricThresholdSet={rankThresholds}
                       message={message}
+                      theme={theme}
                     />
                   ) : (
                     <Board
@@ -522,6 +533,7 @@ export const Charts = (props: ChartProps) => {
                       graphEnd={endDate}
                       metricThresholdSet={rankThresholds}
                       message={message}
+                      theme={theme}
                     />
                   )}
                 </div>
@@ -548,6 +560,7 @@ export const Charts = (props: ChartProps) => {
                     graphStart={startDate}
                     graphEnd={endDate}
                     message={message}
+                    theme={theme}
                   />
                 </div>
               </Box>
@@ -566,6 +579,7 @@ export const Charts = (props: ChartProps) => {
                     graphStart={startDate}
                     graphEnd={endDate}
                     message={message}
+                    theme={theme}
                   />
                 </div>
               </Box>
@@ -584,6 +598,7 @@ export const Charts = (props: ChartProps) => {
                     graphStart={startDate}
                     graphEnd={endDate}
                     message={message}
+                    theme={theme}
                   />
                 </div>
               </Box>
@@ -602,6 +617,7 @@ export const Charts = (props: ChartProps) => {
                     graphStart={startDate}
                     graphEnd={endDate}
                     message={message}
+                    theme={theme}
                   />
                 </div>
               </Box>
