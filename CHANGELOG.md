@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.2...v1.0.3) (2024-09-16)
+
+
+### Bug Fixes
+
+* add code validation to workflows ([#18](https://github.com/liatrio/backstage-dora-plugin/issues/18)) ([252edba](https://github.com/liatrio/backstage-dora-plugin/commit/252edba3f3608aca2a53304b522266df3ccda85e))
+
 ## v1.0.2 (2024-09-12)
 
 ### Fix
