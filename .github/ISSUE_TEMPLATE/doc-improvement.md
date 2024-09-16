@@ -4,7 +4,6 @@ about: Suggest improvements or report issues with the documentation
 title: ''
 labels: documentation
 assignees: ''
-
 ---
 
 **Describe the issue with the documentation.**

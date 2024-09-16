@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { InfoCard } from '@backstage/core-components';
 import { Box, Grid } from '@material-ui/core';
@@ -22,8 +22,10 @@ import {
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
 import {
+  COLOR_DARK,
+  COLOR_LIGHT,
   fetchTeams,
-  genAuthHeaderValueLookup,
+  useAuthHeaderValueLookup,
   getRepositoryName,
 } from '../helper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,7 +35,7 @@ import { ChartTitle } from './ChartTitle';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   doraCalendar: {
     '& .react-datepicker__header': {
       backgroundColor: theme.palette.background.default,
@@ -127,7 +129,7 @@ const defaultMetrics: DoraState = {
 };
 
 export const Charts = (props: ChartProps) => {
-  const entity = !props.showTeamSelection ? useEntity() : null;
+  const entity = useEntity();
   const configApi = useApi(configApiRef);
   const backendUrl = configApi.getString('backend.baseUrl');
   const dataEndpoint = configApi.getString('dora.dataEndpoint');
@@ -137,14 +139,14 @@ export const Charts = (props: ChartProps) => {
   const teamsList = configApi.getOptional('dora.teams') as string[];
   const showTrendGraph = configApi.getOptionalBoolean('dora.showTrendGraph');
   const showIndividualTrends = configApi.getOptionalBoolean(
-    'dora.showIndividualTrends'
+    'dora.showIndividualTrends',
   );
   const daysToFetch = configApi.getNumber('dora.daysToFetch');
   const rankThresholds = configApi.getOptional(
-    'dora.rankThresholds'
+    'dora.rankThresholds',
   ) as MetricThresholdSet;
 
-  const getAuthHeaderValue = genAuthHeaderValueLookup();
+  const getAuthHeaderValue = useAuthHeaderValueLookup();
 
   const apiUrl = `${backendUrl}/api/proxy/dora/api/${dataEndpoint}`;
   const teamListUrl = `${backendUrl}/api/proxy/dora/api/${teamListEndpoint}`;
@@ -161,10 +163,10 @@ export const Charts = (props: ChartProps) => {
   const [startDate, setStartDate] = useState<Date>(getDateDaysInPast(30));
   const [endDate, setEndDate] = useState<Date>(getDateDaysInPast(0));
   const [calendarStartDate, setCalendarStartDate] = useState<Date>(
-    getDateDaysInPast(30)
+    getDateDaysInPast(30),
   );
   const [calendarEndDate, setCalendarEndDate] = useState<Date>(
-    getDateDaysInPast(0)
+    getDateDaysInPast(0),
   );
   const [loading, setLoading] = useState<boolean>(true);
   const [metrics, setMetrics] = useState<DoraState>({ ...defaultMetrics });
@@ -172,99 +174,105 @@ export const Charts = (props: ChartProps) => {
 
   const classes = useStyles();
   const backstageTheme = useTheme();
-  const theme = backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
+  const theme =
+    backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
-  const getMetrics = (data: any) => {
-    if (!data || data.length === 0) {
-      setMetrics({ ...defaultMetrics });
-      return;
-    }
-
-    const metrics = buildDoraStateForPeriod(
-      {
-        data: [],
-        metricThresholdSet: rankThresholds,
-        holidays: [],
-        includeWeekendsInCalculations: includeWeekends,
-        graphEnd: endDate,
-        graphStart: startDate,
-      },
-      data,
-      startDate,
-      endDate
-    );
-
-    setMetrics(metrics);
-  };
-
-  const updateData = (
-    data: any,
-    start?: Date,
-    end?: Date,
-    message?: string
-  ) => {
-    if (!data || data.length < 1) {
-      setData([]);
-      setMetrics({ ...defaultMetrics });
-      setMessage('');
-    } else {
-      setData(data);
-    }
-
-    getMetrics(data);
-
-    if (message !== undefined) {
-      setMessage(message);
-    }
-
-    if (start) {
-      setStartDate(start);
-    }
-
-    if (end) {
-      setEndDate(end);
-    }
-  };
-
-  const makeFetchOptions = (team?: string, repositories?: string[]) => {
-    let fetchOptions: any = {
-      api: apiUrl,
-      getAuthHeaderValue: getAuthHeaderValue,
-      start: getDateDaysInPast(daysToFetch),
-      end: getDateDaysInPastUtc(0),
-    };
-
-    if (!props.showTeamSelection) {
-      fetchOptions.repositories = repositories!;
-    } else {
-      fetchOptions.team = team;
-    }
-
-    return fetchOptions;
-  };
-
-  const callFetchData = async (teamIndex: number, repository: string) => {
-    const fetchOptions = makeFetchOptions(teams[teamIndex]?.value, [
-      repository,
-    ]);
-
-    setLoading(true);
-
-    await fetchData(
-      fetchOptions,
-      (data: any) => {
-        updateData(data, undefined, undefined, '');
-        setLoading(false);
-      },
-      (_) => {
-        setLoading(false);
+  const getMetrics = useCallback(
+    (respData: any) => {
+      if (!respData || respData.length === 0) {
+        setMetrics({ ...defaultMetrics });
+        return;
       }
-    );
-  };
+
+      const metricsData = buildDoraStateForPeriod(
+        {
+          data: [],
+          metricThresholdSet: rankThresholds,
+          holidays: [],
+          includeWeekendsInCalculations: includeWeekends,
+          graphEnd: endDate,
+          graphStart: startDate,
+        },
+        respData,
+        startDate,
+        endDate,
+      );
+
+      setMetrics(metricsData);
+    },
+    [endDate, includeWeekends, rankThresholds, startDate],
+  );
+
+  const updateData = useCallback(
+    (respData: any, start?: Date, end?: Date, msg?: string) => {
+      if (!respData || respData.length < 1) {
+        setData([]);
+        setMetrics({ ...defaultMetrics });
+        setMessage('');
+      } else {
+        setData(respData);
+      }
+
+      getMetrics(respData);
+
+      if (msg !== undefined) {
+        setMessage(msg);
+      }
+
+      if (start) {
+        setStartDate(start);
+      }
+
+      if (end) {
+        setEndDate(end);
+      }
+    },
+    [getMetrics],
+  );
+
+  const makeFetchOptions = useCallback(
+    (team?: string, repositories?: string[]) => {
+      const fetchOptions: any = {
+        api: apiUrl,
+        getAuthHeaderValue: getAuthHeaderValue,
+        start: getDateDaysInPast(daysToFetch),
+        end: getDateDaysInPastUtc(0),
+      };
+
+      if (!props.showTeamSelection) {
+        fetchOptions.repositories = repositories!;
+      } else {
+        fetchOptions.team = team;
+      }
+
+      return fetchOptions;
+    },
+    [apiUrl, daysToFetch, getAuthHeaderValue, props.showTeamSelection],
+  );
+
+  const callFetchData = useCallback(
+    async (idx: number, repo: string) => {
+      const fetchOptions = makeFetchOptions(teams[idx]?.value, [repo]);
+
+      setLoading(true);
+
+      await fetchData(
+        fetchOptions,
+        (respData: any) => {
+          updateData(respData, undefined, undefined, '');
+          setLoading(false);
+        },
+        _ => {
+          setLoading(false);
+        },
+      );
+    },
+    [makeFetchOptions, teams, updateData],
+  );
 
   const updateTeam = async (value: any) => {
     const newIndex = teams.findIndex(
-      (range: { value: string; label: string }) => range.label === value.label
+      (range: { value: string; label: string }) => range.label === value.label,
     );
 
     setTeamIndex(newIndex);
@@ -316,10 +324,10 @@ export const Charts = (props: ChartProps) => {
       }
     }
 
-    let fetch = props.showTeamSelection
+    const fetch = props.showTeamSelection
       ? async () => {
           if (teamsList && teamsList.length > 0) {
-            let teamsEntires = [
+            const teamEntries = [
               {
                 value: '',
                 label: 'Please Select',
@@ -327,7 +335,7 @@ export const Charts = (props: ChartProps) => {
             ];
 
             for (const team of teamsList) {
-              teamsEntires.push({
+              teamEntries.push({
                 value: team,
                 label: team,
               });
@@ -335,16 +343,16 @@ export const Charts = (props: ChartProps) => {
 
             setMessage('Please select a Team');
             setLoading(false);
-            setTeams(teamsEntires);
+            setTeams(teamEntries);
           } else {
             fetchTeams(
               teamListUrl,
               getAuthHeaderValue,
               (teams_data: any) => {
-                let newList: any[] = [{ label: 'Please Select', value: '' }];
+                const newList: any[] = [{ label: 'Please Select', value: '' }];
 
-                for (var entry of teams_data.teams) {
-                  let newEntry = {
+                for (const entry of teams_data.teams) {
+                  const newEntry = {
                     label: entry,
                     value: entry,
                   };
@@ -355,9 +363,9 @@ export const Charts = (props: ChartProps) => {
                 setTeams(newList);
                 setLoading(false);
               },
-              (_) => {
+              _ => {
                 setLoading(false);
-              }
+              },
             );
           }
         }
@@ -366,7 +374,15 @@ export const Charts = (props: ChartProps) => {
         };
 
     fetch();
-  }, []);
+  }, [
+    callFetchData,
+    entity,
+    getAuthHeaderValue,
+    props.showTeamSelection,
+    teamIndex,
+    teamListUrl,
+    teamsList,
+  ]);
 
   if (repository === '' && !props.showTeamSelection) {
     return (
@@ -377,7 +393,7 @@ export const Charts = (props: ChartProps) => {
   const tTitle = (
     <ChartTitle
       title="DORA: At a Glance"
-      info="You DORA Trend, week over week, for the period selected"
+      info="Your DORA Trend, week over week, for the period selected"
       theme={theme}
     />
   );
@@ -434,7 +450,7 @@ export const Charts = (props: ChartProps) => {
       <Tooltip
         id="metric_tooltip"
         place="bottom"
-        border={`1px solid ${theme === Theme.Dark ? '#FFF' : '#000'}`}
+        border={`1px solid ${theme === Theme.Dark ? COLOR_LIGHT : COLOR_DARK}`}
         opacity="1"
         style={{
           borderRadius: '10px',
@@ -463,11 +479,15 @@ export const Charts = (props: ChartProps) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <label style={{ paddingRight: '10px' }}>
+                <label
+                  htmlFor="select-date-range"
+                  style={{ paddingRight: '10px' }}
+                >
                   Select Date Range:
                 </label>
                 <div className={classes.doraCalendar}>
                   <DatePicker
+                    id="select-date-range"
                     selected={calendarStartDate}
                     onChange={updateDateRange}
                     startDate={calendarStartDate}
@@ -485,7 +505,7 @@ export const Charts = (props: ChartProps) => {
                       justifyContent: 'center',
                     }}
                   >
-                    <label style={{ paddingRight: '10px' }}>Select Team:</label>
+                    <span style={{ paddingRight: '10px' }}>Select Team:</span>
                     <Dropdown
                       options={teams}
                       onChange={updateTeam}
@@ -501,7 +521,7 @@ export const Charts = (props: ChartProps) => {
           <InfoCard
             title={showTrendGraph ? tTitle : bTitle}
             className="doraCard"
-            noPadding={true}
+            noPadding
           >
             <Box position="relative">
               <Box display="flex" justifyContent="flex-end">

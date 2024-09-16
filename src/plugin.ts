@@ -19,16 +19,16 @@ export const EntityDORAAtAGlance = DORAMetricsPlugin.provide(
   createComponentExtension({
     name: 'EntityDORAAtAGlance',
     component: {
-      lazy: () => import('./components/AtAGlance').then((m) => m.AtAGlance),
+      lazy: () => import('./components/AtAGlance').then(m => m.AtAGlance),
     },
-  })
+  }),
 );
 
 export const EntityDORACharts = DORAMetricsPlugin.provide(
   createComponentExtension({
     name: 'EntityDORACharts',
     component: {
-      lazy: () => import('./components/Charts').then((m) => m.Charts),
+      lazy: () => import('./components/Charts').then(m => m.Charts),
     },
-  })
+  }),
 );

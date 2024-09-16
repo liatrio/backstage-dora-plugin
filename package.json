@@ -1,21 +1,29 @@
 {
-  "name": "backstage-dora-plugin",
+  "name": "@liatrio/backstage-dora-plugin",
   "version": "0.0.0",
   "main": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "license": "Apache-2.0",
-  "private": true,
+  "description": "A Backstage plugin for DORA metrics",
+  "keywords": [
+    "backstage",
+    "dora",
+    "plugin",
+    "metrics"
+  ],
   "publishConfig": {
-    "access": "public",
-    "main": "dist/index.esm.js",
-    "types": "dist/index.d.ts"
+    "access": "public"
   },
   "backstage": {
     "role": "frontend-plugin",
     "pluginId": "dora-metrics",
     "pluginPackages": [
-      "backstage-dora-plugin"
+      "@liatrio/backstage-dora-plugin"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liatrio/backstage-dora-plugin.git"
   },
   "configSchema": "config.d.ts",
   "sideEffects": false,
@@ -26,16 +34,21 @@
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
     "prepack": "backstage-cli package prepack",
-    "postpack": "backstage-cli package postpack"
+    "postpack": "backstage-cli package postpack",
+    "prettier:check": "npx --yes prettier --check .",
+    "prettier:fix": "npx --yes prettier --write .",
+    "tsc:full": "tsc --skipLibCheck true --incremental false"
   },
   "dependencies": {
     "@backstage/core-components": "^0.14.3",
     "@backstage/core-plugin-api": "^1.9.1",
+    "@backstage/plugin-catalog-react": "^1.12.3",
     "@backstage/theme": "^0.5.2",
     "@liatrio/react-dora-charts": "^1.1.4",
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.61",
+    "@mui/material": "^6.1.0",
     "react-datepicker": "^7.3.0",
     "react-dropdown": "^1.11.0",
     "react-tooltip": "^5.28.0",
@@ -50,15 +63,30 @@
     "@backstage/core-app-api": "^1.12.3",
     "@backstage/dev-utils": "^1.0.26",
     "@backstage/test-utils": "^1.5.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^10.0.4",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/npm": "^11.0.3",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "@spotify/prettier-config": "^15.0.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^15.0.0",
     "@testing-library/user-event": "^14.0.0",
-    "msw": "^1.0.0"
+    "conventional-changelog-conventionalcommits": "^7.0.2",
+    "msw": "^1.0.0",
+    "react": "^18.0.2",
+    "react-dom": "^18.0.2",
+    "react-router-dom": "^6.3.0",
+    "semantic-release": "^22.0.12"
   },
   "files": [
     "dist",
-    "src",
-    "config.d.ts"
+    "dist-types",
+    "config.d.ts",
+    "LICENSE"
   ],
-  "module": "./dist/index.esm.js"
+  "module": "./dist/index.esm.js",
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
+  "prettier": "@spotify/prettier-config"
 }

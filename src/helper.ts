@@ -1,16 +1,20 @@
 import { useApi, identityApiRef } from '@backstage/core-plugin-api';
 
+export const COLOR_GREEN = '#24ae1d';
+export const COLOR_DARK = '#000';
+export const COLOR_LIGHT = '#FFF';
+
 export const getRepositoryName = (e: any): string => {
   if ('github.com/project-slug' in e.entity.metadata.annotations) {
     return e.entity.metadata.annotations['github.com/project-slug'].split(
-      '/'
+      '/',
     )[1];
-  } else {
-    return '';
   }
+
+  return '';
 };
 
-export const genAuthHeaderValueLookup = () => {
+export const useAuthHeaderValueLookup = () => {
   const identityApi = useApi(identityApiRef);
 
   return async () => {
@@ -18,9 +22,9 @@ export const genAuthHeaderValueLookup = () => {
 
     if (obj.token) {
       return `Bearer ${obj.token}`;
-    } else {
-      return undefined;
     }
+
+    return undefined;
   };
 };
 
@@ -28,7 +32,7 @@ export const fetchTeams = async (
   url: string,
   getAuthHeaderValue: () => Promise<string | undefined>,
   onSuccess: (data: any) => void,
-  onFailure?: (data: any) => void
+  onFailure?: (data: any) => void,
 ) => {
   if (!url) {
     return;
@@ -56,7 +60,7 @@ export const fetchTeams = async (
     const response = await fetch(url, options);
     const json = await response.text();
 
-    let parsedData = JSON.parse(json);
+    const parsedData = JSON.parse(json);
 
     onSuccess(parsedData);
   } catch (error) {

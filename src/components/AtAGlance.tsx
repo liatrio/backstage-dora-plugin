@@ -12,7 +12,12 @@ import {
 } from '@liatrio/react-dora-charts';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
-import { genAuthHeaderValueLookup, getRepositoryName } from '../helper';
+import {
+  COLOR_DARK,
+  COLOR_LIGHT,
+  useAuthHeaderValueLookup,
+  getRepositoryName,
+} from '../helper';
 import { ChartTitle } from './ChartTitle';
 import { Tooltip } from 'react-tooltip';
 
@@ -25,19 +30,20 @@ export const AtAGlance = () => {
   const includeWeekends = configApi.getOptionalBoolean('dora.includeWeekends');
   const showDetails = configApi.getOptionalBoolean('dora.showDetails');
   const rankThresholds = configApi.getOptional(
-    'dora.rankThresholds'
+    'dora.rankThresholds',
   ) as MetricThresholdSet;
   const showTrendGraph = configApi.getOptionalBoolean('dora.showTrendGraph');
   const showIndividualTrends = configApi.getOptionalBoolean(
-    'dora.showIndividualTrends'
+    'dora.showIndividualTrends',
   );
 
   const [data, setData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const backstageTheme = useTheme();
-  const theme = backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
+  const theme =
+    backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
-  const getAuthHeaderValue = genAuthHeaderValueLookup();
+  const getAuthHeaderValue = useAuthHeaderValueLookup();
 
   const apiUrl = `${backendUrl}/api/proxy/dora/api/${dataEndpoint}`;
   const repositoryName = getRepositoryName(entity);
@@ -50,8 +56,8 @@ export const AtAGlance = () => {
       return;
     }
 
-    let fetch = async () => {
-      let fetchOptions: any = {
+    const fetch = async () => {
+      const fetchOptions: any = {
         api: apiUrl,
         getAuthHeaderValue: getAuthHeaderValue,
         start: getDateDaysInPastUtc(daysToFetch),
@@ -63,18 +69,18 @@ export const AtAGlance = () => {
 
       await fetchData(
         fetchOptions,
-        (data: any) => {
-          setData(data);
+        (respData: any) => {
+          setData(respData);
           setLoading(false);
         },
-        (_) => {
+        _ => {
           setLoading(false);
-        }
+        },
       );
     };
 
     fetch();
-  }, []);
+  }, [apiUrl, daysToFetch, getAuthHeaderValue, repositoryName]);
 
   const tTitle = (
     <ChartTitle
@@ -96,7 +102,7 @@ export const AtAGlance = () => {
       <Tooltip
         id="metric_tooltip"
         place="bottom"
-        border={`1px solid ${theme === Theme.Dark ? '#FFF' : '#000'}`}
+        border={`1px solid ${theme === Theme.Dark ? COLOR_LIGHT : COLOR_DARK}`}
         opacity="1"
         style={{
           borderRadius: '10px',
