@@ -15,7 +15,7 @@ import { useApi, configApiRef } from '@backstage/core-plugin-api';
 import {
   COLOR_DARK,
   COLOR_LIGHT,
-  genAuthHeaderValueLookup,
+  useAuthHeaderValueLookup,
   getRepositoryName,
 } from '../helper';
 import { ChartTitle } from './ChartTitle';
@@ -43,7 +43,7 @@ export const AtAGlance = () => {
   const theme =
     backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
-  const getAuthHeaderValue = genAuthHeaderValueLookup();
+  const getAuthHeaderValue = useAuthHeaderValueLookup();
 
   const apiUrl = `${backendUrl}/api/proxy/dora/api/${dataEndpoint}`;
   const repositoryName = getRepositoryName(entity);
@@ -80,7 +80,7 @@ export const AtAGlance = () => {
     };
 
     fetch();
-  }, []);
+  }, [apiUrl, daysToFetch, getAuthHeaderValue, repositoryName]);
 
   const tTitle = (
     <ChartTitle

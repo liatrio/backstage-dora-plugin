@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { InfoCard } from '@backstage/core-components';
 import { Box, Grid } from '@material-ui/core';
@@ -25,7 +25,7 @@ import {
   COLOR_DARK,
   COLOR_LIGHT,
   fetchTeams,
-  genAuthHeaderValueLookup,
+  useAuthHeaderValueLookup,
   getRepositoryName,
 } from '../helper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -129,7 +129,7 @@ const defaultMetrics: DoraState = {
 };
 
 export const Charts = (props: ChartProps) => {
-  const entity = !props.showTeamSelection ? useEntity() : null;
+  const entity = useEntity();
   const configApi = useApi(configApiRef);
   const backendUrl = configApi.getString('backend.baseUrl');
   const dataEndpoint = configApi.getString('dora.dataEndpoint');
@@ -146,7 +146,7 @@ export const Charts = (props: ChartProps) => {
     'dora.rankThresholds',
   ) as MetricThresholdSet;
 
-  const getAuthHeaderValue = genAuthHeaderValueLookup();
+  const getAuthHeaderValue = useAuthHeaderValueLookup();
 
   const apiUrl = `${backendUrl}/api/proxy/dora/api/${dataEndpoint}`;
   const teamListUrl = `${backendUrl}/api/proxy/dora/api/${teamListEndpoint}`;
@@ -177,7 +177,7 @@ export const Charts = (props: ChartProps) => {
   const theme =
     backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
-  const getMetrics = (respData: any) => {
+  const getMetrics = useCallback((respData: any) => {
     if (!respData || respData.length === 0) {
       setMetrics({ ...defaultMetrics });
       return;
@@ -198,9 +198,9 @@ export const Charts = (props: ChartProps) => {
     );
 
     setMetrics(metricsData);
-  };
+  }, [endDate, includeWeekends, rankThresholds, startDate]);
 
-  const updateData = (
+  const updateData = useCallback((
     respData: any,
     start?: Date,
     end?: Date,
@@ -227,9 +227,9 @@ export const Charts = (props: ChartProps) => {
     if (end) {
       setEndDate(end);
     }
-  };
+  }, [getMetrics]);
 
-  const makeFetchOptions = (team?: string, repositories?: string[]) => {
+  const makeFetchOptions = useCallback((team?: string, repositories?: string[]) => {
     const fetchOptions: any = {
       api: apiUrl,
       getAuthHeaderValue: getAuthHeaderValue,
@@ -244,9 +244,9 @@ export const Charts = (props: ChartProps) => {
     }
 
     return fetchOptions;
-  };
+  }, [apiUrl, daysToFetch, getAuthHeaderValue, props.showTeamSelection]);
 
-  const callFetchData = async (idx: number, repo: string) => {
+  const callFetchData = useCallback(async (idx: number, repo: string) => {
     const fetchOptions = makeFetchOptions(teams[idx]?.value, [repo]);
 
     setLoading(true);
@@ -261,7 +261,7 @@ export const Charts = (props: ChartProps) => {
         setLoading(false);
       },
     );
-  };
+  }, [makeFetchOptions, teams, updateData]);
 
   const updateTeam = async (value: any) => {
     const newIndex = teams.findIndex(
@@ -367,7 +367,7 @@ export const Charts = (props: ChartProps) => {
         };
 
     fetch();
-  }, []);
+  }, [callFetchData, entity, getAuthHeaderValue, props.showTeamSelection, teamIndex, teamListUrl, teamsList]);
 
   if (repository === '' && !props.showTeamSelection) {
     return (
@@ -490,7 +490,7 @@ export const Charts = (props: ChartProps) => {
                       justifyContent: 'center',
                     }}
                   >
-                    <label style={{ paddingRight: '10px' }}>Select Team:</label>
+                    <span style={{ paddingRight: '10px' }}>Select Team:</span>
                     <Dropdown
                       options={teams}
                       onChange={updateTeam}

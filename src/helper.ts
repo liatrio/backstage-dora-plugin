@@ -14,7 +14,7 @@ export const getRepositoryName = (e: any): string => {
   return '';
 };
 
-export const genAuthHeaderValueLookup = () => {
+export const useAuthHeaderValueLookup = () => {
   const identityApi = useApi(identityApiRef);
 
   return async () => {
