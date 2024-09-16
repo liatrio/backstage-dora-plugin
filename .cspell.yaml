@@ -1,0 +1,30 @@
+language: en_US
+words:
+  - Liatrio
+  - testid
+  - uuidv
+dictionaries:
+  - aws
+  - companies
+  - css
+  - docker
+  - html
+  - k8s
+  - markdown
+  - misc
+  - npm
+  - softwareTerms
+  - useCompounds
+ignorePaths:
+  - .gitignore
+  - .dockerignore
+  - .cspell.yaml
+  - .git/
+  - CHANGELOG.md
+  - package.json
+  - stories/
+  - node_modules/
+features:
+  weighted-suggestions: true
+allowCompoundWords: true
+useGitignore: true
