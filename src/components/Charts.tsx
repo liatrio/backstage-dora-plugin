@@ -177,91 +177,98 @@ export const Charts = (props: ChartProps) => {
   const theme =
     backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
-  const getMetrics = useCallback((respData: any) => {
-    if (!respData || respData.length === 0) {
-      setMetrics({ ...defaultMetrics });
-      return;
-    }
+  const getMetrics = useCallback(
+    (respData: any) => {
+      if (!respData || respData.length === 0) {
+        setMetrics({ ...defaultMetrics });
+        return;
+      }
 
-    const metricsData = buildDoraStateForPeriod(
-      {
-        data: [],
-        metricThresholdSet: rankThresholds,
-        holidays: [],
-        includeWeekendsInCalculations: includeWeekends,
-        graphEnd: endDate,
-        graphStart: startDate,
-      },
-      respData,
-      startDate,
-      endDate,
-    );
+      const metricsData = buildDoraStateForPeriod(
+        {
+          data: [],
+          metricThresholdSet: rankThresholds,
+          holidays: [],
+          includeWeekendsInCalculations: includeWeekends,
+          graphEnd: endDate,
+          graphStart: startDate,
+        },
+        respData,
+        startDate,
+        endDate,
+      );
 
-    setMetrics(metricsData);
-  }, [endDate, includeWeekends, rankThresholds, startDate]);
+      setMetrics(metricsData);
+    },
+    [endDate, includeWeekends, rankThresholds, startDate],
+  );
 
-  const updateData = useCallback((
-    respData: any,
-    start?: Date,
-    end?: Date,
-    msg?: string,
-  ) => {
-    if (!respData || respData.length < 1) {
-      setData([]);
-      setMetrics({ ...defaultMetrics });
-      setMessage('');
-    } else {
-      setData(respData);
-    }
+  const updateData = useCallback(
+    (respData: any, start?: Date, end?: Date, msg?: string) => {
+      if (!respData || respData.length < 1) {
+        setData([]);
+        setMetrics({ ...defaultMetrics });
+        setMessage('');
+      } else {
+        setData(respData);
+      }
 
-    getMetrics(respData);
+      getMetrics(respData);
 
-    if (msg !== undefined) {
-      setMessage(msg);
-    }
+      if (msg !== undefined) {
+        setMessage(msg);
+      }
 
-    if (start) {
-      setStartDate(start);
-    }
+      if (start) {
+        setStartDate(start);
+      }
 
-    if (end) {
-      setEndDate(end);
-    }
-  }, [getMetrics]);
+      if (end) {
+        setEndDate(end);
+      }
+    },
+    [getMetrics],
+  );
 
-  const makeFetchOptions = useCallback((team?: string, repositories?: string[]) => {
-    const fetchOptions: any = {
-      api: apiUrl,
-      getAuthHeaderValue: getAuthHeaderValue,
-      start: getDateDaysInPast(daysToFetch),
-      end: getDateDaysInPastUtc(0),
-    };
+  const makeFetchOptions = useCallback(
+    (team?: string, repositories?: string[]) => {
+      const fetchOptions: any = {
+        api: apiUrl,
+        getAuthHeaderValue: getAuthHeaderValue,
+        start: getDateDaysInPast(daysToFetch),
+        end: getDateDaysInPastUtc(0),
+      };
 
-    if (!props.showTeamSelection) {
-      fetchOptions.repositories = repositories!;
-    } else {
-      fetchOptions.team = team;
-    }
+      if (!props.showTeamSelection) {
+        fetchOptions.repositories = repositories!;
+      } else {
+        fetchOptions.team = team;
+      }
 
-    return fetchOptions;
-  }, [apiUrl, daysToFetch, getAuthHeaderValue, props.showTeamSelection]);
+      return fetchOptions;
+    },
+    [apiUrl, daysToFetch, getAuthHeaderValue, props.showTeamSelection],
+  );
 
-  const callFetchData = useCallback(async (idx: number, repo: string) => {
-    const fetchOptions = makeFetchOptions(teams[idx]?.value, [repo]);
+  const callFetchData = useCallback(
+    async (idx: number, repo: string) => {
+      const fetchOptions = makeFetchOptions(teams[idx]?.value, [repo]);
 
-    setLoading(true);
+      setLoading(true);
 
-    await fetchData(
-      fetchOptions,
-      (respData: any) => {
-        updateData(respData, undefined, undefined, '');
-        setLoading(false);
-      },
-      _ => {
-        setLoading(false);
-      },
-    );
-  }, [makeFetchOptions, teams, updateData]);
+      await fetchData(
+        fetchOptions,
+        (respData: any) => {
+          updateData(respData, undefined, undefined, '');
+          setLoading(false);
+        },
+        _ => {
+          setLoading(false);
+        },
+      );
+    },
+    [makeFetchOptions, teams, updateData],
+  );
 
   const updateTeam = async (value: any) => {
     const newIndex = teams.findIndex(
@@ -367,7 +374,15 @@ export const Charts = (props: ChartProps) => {
         };
 
     fetch();
-  }, [callFetchData, entity, getAuthHeaderValue, props.showTeamSelection, teamIndex, teamListUrl, teamsList]);
+  }, [
+    callFetchData,
+    entity,
+    getAuthHeaderValue,
+    props.showTeamSelection,
+    teamIndex,
+    teamListUrl,
+    teamsList,
+  ]);
 
   if (repository === '' && !props.showTeamSelection) {
     return (
