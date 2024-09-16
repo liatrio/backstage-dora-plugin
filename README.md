@@ -220,3 +220,7 @@ To Install this plugin you'll need to do the following:
            - elite: 1 (1 hr or less)
            - high: 24 (1 day or less)
            - medium: 168 (1 week or less)
+
+# Contributing 
+
+See [Contributing](./CONTRIBUTING) to Backstage Dora Plugin 
