@@ -8,7 +8,7 @@ This is a plugin for the [Backstage](https://backstage.io/) Project that provide
 
 Our goal is to provide an Open Source plugin that works with the Open Telemetry backend collecting your DORA metrics in a non-opinionated manner.
 
-**This plugin is currently losely tied to GitHub and Loki DB, we plan to expand to GitLab and other platforms in the future**
+**This plugin is currently loosely tied to GitHub and Loki DB, we plan to expand to GitLab and other platforms in the future**
 
 # Components
 
@@ -27,7 +27,7 @@ Depending on how you have set up your configuration for this plugin, it will sho
   - `Recovery Time` - The average of a failed deployment to the next successful deployment
     - Regardless of configuration, includes weekends and does not subtract the holidays if set.
 - The DORA Metrics overall trend over the last 30 days
-  - The Trend is calculated on a per week basis
+  - The Trend is calculated on a per-week basis
   - If a component has gone stale or is too new, you will see a note about there not being enough data to render a trend.
   - There is an option to also show each DORA Metric as a line on the graph, a legend will appear in this case
 
@@ -61,7 +61,7 @@ Here are some examples:
 This plugin relies on the following dependencies:
 
 - [Liatrio DORA React Components](https://github.com/liatrio/react-dora-charts)
-- [Liatrio Otel Collector](https://github.com/liatrio/liatrio-otel-collector)
+- [Liatrio OTel Collector](https://github.com/liatrio/liatrio-otel-collector)
 - An instance of Loki DB
   - **You can swap out for any Time Series DB, but you will need to fork and modify the [Liatrio DORA API](https://github.com/liatrio/liatrio-dora-api) to do so**
 - A GitHub Organization hosting your repositories
@@ -73,22 +73,22 @@ This plugin relies on the following dependencies:
 
 In the `dependencies` folder, you will find a docker-compose file. Using this will spin up the following in docker containers:
 
-- An instance of Loki DB with persistant storage
+- An instance of Loki DB with persistent storage
 - An instance of Promtail, which is required by Loki DB
-- An instance of an OTEL Collector configured to accept events from GitHub
+- An instance of an OTel Collector configured to accept events from GitHub
 - An instance of the [Liatrio DORA API](https://github.com/liatrio/liatrio-dora-api), which this plugin can call to get the data it needs
 
 You will need to update the `.env` file with your `GitHub Org`, `User` and `PAT` (with full repo access) for the API to be able to return a list of teams
 
 ## Kubernetes
 
-If you have a Kubernetes Cluster, we have a quick start guide that installs `Loki DB` and [Liatrio Otel Collector](https://github.com/liatrio/liatrio-otel-collector) (among a few other tools) that can be found [here](https://github.com/liatrio/tag-o11y-quick-start-manifests)
+If you have a Kubernetes Cluster, we have a quick start guide that installs `Loki DB` and [Liatrio OTel Collector](https://github.com/liatrio/liatrio-otel-collector) (among a few other tools) that can be found [here](https://github.com/liatrio/tag-o11y-quick-start-manifests)
 
 This quick start manifest does not set up the [Liatrio DORA API](https://github.com/liatrio/liatrio-dora-api) or any other API which you would need to sit between this plugin and the Loki DB.
 
 ## Configuring GitHub
 
-Once you have the dependencies configured and running, you will need to update your GitHub Organization to send events to the OTEL Collector.
+Once you have the dependencies configured and running, you will need to update your GitHub Organization to send events to the OTel Collector.
 
 You can do this by setting up a new `Webhook` and configuring the `Webhook` to send the following events:
 
@@ -175,7 +175,7 @@ To Install this plugin you'll need to do the following:
      - Required:
 
        - `dataEndpoint`: This the endpoint on the proxy that provides the deployment data. If you are using the `liatrio-dora-api` this will be `data`
-       - `teamListEndpiont`: This the endpoint on the proxy that provides the team and repo owndership data. If you are using the `liatrio-dora-api` this will be `teams`
+       - `teamListEndpiont`: This the endpoint on the proxy that provides the team and repo ownership data. If you are using the `liatrio-dora-api` this will be `teams`
        - `daysToFetch`: This is the number of days worth of data that will be fetched for the charts to have available for display
 
      - Optional:
