@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.4...v1.0.5) (2024-09-16)
+
+
+### Bug Fixes
+
+* added LICENSE, build, and language badge to repo ([#24](https://github.com/liatrio/backstage-dora-plugin/issues/24)) ([69aafc6](https://github.com/liatrio/backstage-dora-plugin/commit/69aafc6bdc6bc173b2669cec956ef38b551acbef))
+
 ## [1.0.4](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.3...v1.0.4) (2024-09-16)
 
 
