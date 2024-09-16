@@ -101,7 +101,7 @@ You can do this by setting up a new `Webhook` and configuring the `Webhook` to s
 
 To Install this plugin you'll need to do the following:
 
-1. Install the `backstage-dora-plugin` package into the `/packages/app` folder
+1. Install the `@liatrio/backstage-dora-plugin` package into the `/packages/app` folder
 
    ```shell
    npm install @liatrio/backstage-dora-plugin
@@ -114,7 +114,7 @@ To Install this plugin you'll need to do the following:
    - Add this to your imports:
 
    ```typescript
-   import { EntityDORACharts } from 'backstage-dora-plugin';
+   import { EntityDORACharts } from '@liatrio/backstage-dora-plugin';
    ```
 
    - Add this into the `FlatRoutes` element as a child:
@@ -131,7 +131,7 @@ To Install this plugin you'll need to do the following:
    import {
      EntityDORACharts,
      EntityDORAAtAGlance,
-   } from 'backstage-dora-plugin';
+   } from '@liatrio/backstage-dora-plugin';
    ```
 
    - Define this constant:
