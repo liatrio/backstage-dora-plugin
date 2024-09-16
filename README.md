@@ -8,7 +8,6 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/liatrio/backstage-dora-plugin)
 
-
 # Introduction
 
 This is a plugin for the [Backstage](https://backstage.io/) Project that provides a seamless way to display [DORA Metrics](https://dora.dev/guides/dora-metrics-four-keys/) in your developer portals.
