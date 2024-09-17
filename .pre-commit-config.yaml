@@ -1,0 +1,51 @@
+default_install_hook_types: [pre-commit, pre-push, commit-msg]
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-yaml
+        args:
+          - '--allow-multiple-documents'
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.41.0
+    hooks:
+      - id: markdownlint
+        exclude: CHANGELOG.md
+        args:
+          - '--fix' # Automatically fix issues
+          - '--disable=MD013' # Ignore Line length
+          - '--disable=MD033' # Allow Inline HTML
+          - '--disable=MD034' # Allow bare URLs
+          - '--ignore=./.github/ISSUE_TEMPLATE' # Ignore issue templates
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.29.0
+    hooks:
+      - id: commitizen
+      - id: commitizen-branch
+        stages: [push]
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args:
+          - '-d'
+          - '{extends: relaxed, rules: {line-length: {max: 120}}}'
+  - repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v8.13.3
+    hooks:
+      - id: cspell
+  - repo: local
+    hooks:
+      - id: prettier
+        name: Prettier via npm
+        entry: npm run prettier:fix
+        language: node
+        types_or: [css, javascript, ts, tsx]

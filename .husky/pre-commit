@@ -1,0 +1,9 @@
+#!/bin/env bash
+
+set -e
+
+yarn lint:all
+
+if command -v pre-commit &> /dev/null; then
+  pre-commit run
+fi
