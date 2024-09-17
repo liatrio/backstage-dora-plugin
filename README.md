@@ -221,6 +221,6 @@ To Install this plugin you'll need to do the following:
            - high: 24 (1 day or less)
            - medium: 168 (1 week or less)
 
-# Contributing 
+# Contributing
 
-See [Contributing](./CONTRIBUTING) to Backstage Dora Plugin 
+See [Contributing](./CONTRIBUTING) to Backstage Dora Plugin
