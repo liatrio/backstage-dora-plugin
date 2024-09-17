@@ -1,14 +1,6 @@
-# Badges
+# Backstage DORA Plugin
 
-[![CodeQL](https://github.com/liatrio/backstage-liatrio-dora-plugin/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/liatrio/backstage-liatrio-dora-plugin/actions/workflows/codeql.yml)
-
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-[![Release](https://github.com/liatrio/backstage-dora-plugin/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/liatrio/backstage-dora-plugin/actions/workflows/release.yml)
-
-![GitHub top language](https://img.shields.io/github/languages/top/liatrio/backstage-dora-plugin)
-
-# Introduction
+[![CodeQL](https://github.com/liatrio/backstage-liatrio-dora-plugin/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/liatrio/backstage-liatrio-dora-plugin/actions/workflows/codeql.yml) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Release](https://github.com/liatrio/backstage-dora-plugin/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/liatrio/backstage-dora-plugin/actions/workflows/release.yml) ![GitHub top language](https://img.shields.io/github/languages/top/liatrio/backstage-dora-plugin)
 
 This is a plugin for the [Backstage](https://backstage.io/) Project that provides a seamless way to display [DORA Metrics](https://dora.dev/guides/dora-metrics-four-keys/) in your developer portals.
 
