@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.5...v1.0.6) (2024-09-17)
+
+
+### Bug Fixes
+
+* add husky pre-commit ([#22](https://github.com/liatrio/backstage-dora-plugin/issues/22)) ([389235b](https://github.com/liatrio/backstage-dora-plugin/commit/389235bfb8e2f13cb5a36b2ab39288ac50846410))
+
 ## [1.0.5](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.4...v1.0.5) (2024-09-16)
 
 
