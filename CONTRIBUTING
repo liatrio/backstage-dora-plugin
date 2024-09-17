@@ -1,0 +1,49 @@
+# Contributing to the Backstage Dora Plugin
+
+Thank you for considering contributing to the Backstage Dora Plugin! We're excited to have you on board.
+
+## Code of Conduct
+
+We follow the standard open-source code of conduct. Please be respectful and considerate in your interactions with the community.
+
+## Getting Started
+
+Before you start contributing, please make sure you have the following:
+
+* Node.js
+* npm or yarn
+* A code editor or IDE of your choice
+
+## Coding Style and Practices
+
+We follow standard JavaScript and React coding practices. Please make sure to:
+
+* Use consistent indentation and spacing.
+* Use clear and descriptive variable names.
+* Use functions and modules to organize your code.
+* Keep your code concise and readable.
+* Use JSDoc comments to document your code.
+
+### Using `pre-commit`
+
+We use [pre-commit](https://pre-commit.com/) to ensure that our code is formatted consistently and follows good coding practices. Run `pre-commit install` to install the pre-commit hooks. After installation, `pre-commit` will run automatically against your changes on every commit. You can also run `pre-commit run --all-files` to manually run the hooks on all files.
+
+## Testing
+
+We use Jest for testing. Please make sure to write tests for any new features or bug fixes you contribute.
+
+## Opening Pull Requests
+
+To contribute to the codebase, please follow these steps:
+
+1. Fork the repository and create a new branch for your feature or bug fix.
+2. Run `npm install` or `yarn install` to install the dependencies.
+3. Run `pre-commit install` to install the pre-commit hooks.
+4. Use [Conventional Commits](https://www.conventionalcommits.org) to format your commit messages.
+5. Open a pull request to the main repository, targeting the `main` branch.
+
+## Review Process
+
+Once you've opened a pull request, it will be reviewed by the maintainers. We'll provide feedback and guidance to help you improve your contribution.
+
+Thank you again for contributing to the Backstage Dora Plugin!
