@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { InfoCard } from '@backstage/core-components';
 import { Box, Grid } from '@material-ui/core';
