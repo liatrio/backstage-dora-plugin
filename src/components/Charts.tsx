@@ -129,7 +129,8 @@ const defaultMetrics: DoraState = {
 };
 
 export const Charts = (props: ChartProps) => {
-  const entity = useEntity();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const entity = props.showTeamSelection ? null : useEntity();
   const configApi = useApi(configApiRef);
   const backendUrl = configApi.getString('backend.baseUrl');
   const dataEndpoint = configApi.getString('dora.dataEndpoint');
@@ -177,98 +178,91 @@ export const Charts = (props: ChartProps) => {
   const theme =
     backstageTheme.palette.mode === 'dark' ? Theme.Dark : Theme.Light;
 
-  const getMetrics = useCallback(
-    (respData: any) => {
-      if (!respData || respData.length === 0) {
-        setMetrics({ ...defaultMetrics });
-        return;
-      }
+  const getMetrics = (respData: any) => {
+    if (!respData || respData.length === 0) {
+      setMetrics({ ...defaultMetrics });
+      return;
+    }
 
-      const metricsData = buildDoraStateForPeriod(
-        {
-          data: [],
-          metricThresholdSet: rankThresholds,
-          holidays: [],
-          includeWeekendsInCalculations: includeWeekends,
-          graphEnd: endDate,
-          graphStart: startDate,
-        },
-        respData,
-        startDate,
-        endDate,
-      );
+    const metricsData = buildDoraStateForPeriod(
+      {
+        data: [],
+        metricThresholdSet: rankThresholds,
+        holidays: [],
+        includeWeekendsInCalculations: includeWeekends,
+        graphEnd: endDate,
+        graphStart: startDate,
+      },
+      respData,
+      startDate,
+      endDate,
+    );
 
-      setMetrics(metricsData);
-    },
-    [endDate, includeWeekends, rankThresholds, startDate],
-  );
+    setMetrics(metricsData);
+  };
 
-  const updateData = useCallback(
-    (respData: any, start?: Date, end?: Date, msg?: string) => {
-      if (!respData || respData.length < 1) {
-        setData([]);
-        setMetrics({ ...defaultMetrics });
-        setMessage('');
-      } else {
-        setData(respData);
-      }
+  const updateData = (
+    respData: any,
+    start?: Date,
+    end?: Date,
+    msg?: string,
+  ) => {
+    if (!respData || respData.length < 1) {
+      setData([]);
+      setMetrics({ ...defaultMetrics });
+      setMessage('');
+    } else {
+      setData(respData);
+    }
 
-      getMetrics(respData);
+    getMetrics(respData);
 
-      if (msg !== undefined) {
-        setMessage(msg);
-      }
+    if (msg !== undefined) {
+      setMessage(msg);
+    }
 
-      if (start) {
-        setStartDate(start);
-      }
+    if (start) {
+      setStartDate(start);
+    }
 
-      if (end) {
-        setEndDate(end);
-      }
-    },
-    [getMetrics],
-  );
+    if (end) {
+      setEndDate(end);
+    }
+  };
 
-  const makeFetchOptions = useCallback(
-    (team?: string, repositories?: string[]) => {
-      const fetchOptions: any = {
-        api: apiUrl,
-        getAuthHeaderValue: getAuthHeaderValue,
-        start: getDateDaysInPast(daysToFetch),
-        end: getDateDaysInPastUtc(0),
-      };
+  const makeFetchOptions = (team?: string, repositories?: string[]) => {
+    const fetchOptions: any = {
+      api: apiUrl,
+      getAuthHeaderValue: getAuthHeaderValue,
+      start: getDateDaysInPast(daysToFetch),
+      end: getDateDaysInPastUtc(0),
+    };
 
-      if (!props.showTeamSelection) {
-        fetchOptions.repositories = repositories!;
-      } else {
-        fetchOptions.team = team;
-      }
+    if (!props.showTeamSelection) {
+      fetchOptions.repositories = repositories!;
+    } else {
+      fetchOptions.team = team;
+    }
 
-      return fetchOptions;
-    },
-    [apiUrl, daysToFetch, getAuthHeaderValue, props.showTeamSelection],
-  );
+    return fetchOptions;
+  };
 
-  const callFetchData = useCallback(
-    async (idx: number, repo: string) => {
-      const fetchOptions = makeFetchOptions(teams[idx]?.value, [repo]);
+  const callFetchData = async (idx: number, repo: string) => {
+    const fetchOptions = makeFetchOptions(teams[idx]?.value, [repo]);
 
-      setLoading(true);
+    setLoading(true);
 
-      await fetchData(
-        fetchOptions,
-        (respData: any) => {
-          updateData(respData, undefined, undefined, '');
-          setLoading(false);
-        },
-        _ => {
-          setLoading(false);
-        },
-      );
-    },
-    [makeFetchOptions, teams, updateData],
-  );
+    await fetchData(
+      fetchOptions,
+      (respData: any) => {
+        updateData(respData, undefined, undefined, '');
+        setLoading(false);
+      },
+      _ => {
+        setLoading(false);
+      },
+    );
+  };
 
   const updateTeam = async (value: any) => {
     const newIndex = teams.findIndex(
@@ -374,15 +368,8 @@ export const Charts = (props: ChartProps) => {
         };
 
     fetch();
-  }, [
-    callFetchData,
-    entity,
-    getAuthHeaderValue,
-    props.showTeamSelection,
-    teamIndex,
-    teamListUrl,
-    teamsList,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (repository === '' && !props.showTeamSelection) {
     return (
@@ -528,7 +515,7 @@ export const Charts = (props: ChartProps) => {
                 <div
                   style={{
                     width: '800px',
-                    height: '200px',
+                    height: '220px',
                     paddingBottom: showIndividualTrends ? '10px' : '',
                   }}
                 >
