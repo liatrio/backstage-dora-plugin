@@ -36,8 +36,8 @@ Here are some examples:
 | ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/atAGlance.png 'Metrics') | ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/atAGlance_hover.png?raw=true 'Metrics') |
 
 | Overall Trend View                                                                                                              | Overall Trend View with Individual Metric Trends                                                                                          |
-| ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/atAGlance.png?raw=true 'Trend') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/atAGlanceIndividual.png?raw=true 'Trend') |     |
+| ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/atAGlance.png?raw=true 'Trend') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/atAGlanceIndividual.png?raw=true 'Trend') |
 
 ## `Charts`
 
