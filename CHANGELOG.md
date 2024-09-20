@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.7...v1.0.8) (2024-09-20)
+
+
+### Bug Fixes
+
+* address infinite rerender bug ([#27](https://github.com/liatrio/backstage-dora-plugin/issues/27)) ([659ffb4](https://github.com/liatrio/backstage-dora-plugin/commit/659ffb43183fed5eba7d15ed18d5b9792992facb))
+
 ## [1.0.7](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.6...v1.0.7) (2024-09-17)
 
 
