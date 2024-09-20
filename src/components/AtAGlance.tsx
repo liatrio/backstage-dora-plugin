@@ -80,7 +80,8 @@ export const AtAGlance = () => {
     };
 
     fetch();
-  }, [apiUrl, daysToFetch, getAuthHeaderValue, repositoryName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const tTitle = (
     <ChartTitle
@@ -119,7 +120,7 @@ export const AtAGlance = () => {
               DORA Metrics are not available for Non-GitHub repos currently
             </div>
           ) : (
-            <div style={{ width: '750px', height: '200px' }}>
+            <div style={{ width: '750px', height: '220px' }}>
               {showTrendGraph ? (
                 <TrendGraph
                   showIndividualTrends={showIndividualTrends}
