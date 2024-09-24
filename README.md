@@ -6,11 +6,25 @@ This is a plugin for the [Backstage](https://backstage.io/) Project that provide
 
 Our goal is to provide an Open Source plugin that works with the Open Telemetry backend collecting your DORA metrics in a non-opinionated manner.
 
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable-next-line MD036 -->
 **This plugin is currently loosely tied to GitHub and Loki DB, we plan to expand to GitLab and other platforms in the future**
+<!-- prettier-ignore-end -->
 
-# Components
+## Plugin Architecture
 
-## `At A Glance`
+![Dora Backstage Plugin Architecture](./screenshots/dora-backstage-plugin-architecture.drawio.png)
+
+### Links to Modules
+
+- [liatrio-otel-collector](https://github.com/liatrio/liatrio-otel-collector)
+- [liatrio-dora-api](https://github.com/liatrio/liatrio-dora-api)
+- [backstage-dora-plugin](https://github.com/liatrio/backstage-dora-plugin)
+- [react-dora-charts](https://github.com/liatrio/react-dora-charts)
+
+## Components
+
+### `At A Glance`
 
 This offers you a quick view of the state of a component or team.
 
@@ -39,7 +53,7 @@ Here are some examples:
 | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/atAGlance.png?raw=true 'Trend') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/atAGlanceIndividual.png?raw=true 'Trend') |
 
-## `Charts`
+### `Charts`
 
 This is a set of charts that for the DORA metrics.
 
@@ -54,7 +68,7 @@ Here are some examples:
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/teamView.png?raw=true 'Trend') |
 
-# Dependencies
+## Dependencies
 
 This plugin relies on the following dependencies:
 
@@ -65,9 +79,9 @@ This plugin relies on the following dependencies:
 - A GitHub Organization hosting your repositories
   - **We will expand this to more platforms in the future**
 
-# Installation of Dependencies
+## Installation of Dependencies
 
-## Docker Compose
+### Docker Compose
 
 In the `dependencies` folder, you will find a docker-compose file. Using this will spin up the following in docker containers:
 
@@ -78,13 +92,13 @@ In the `dependencies` folder, you will find a docker-compose file. Using this wi
 
 You will need to update the `.env` file with your `GitHub Org`, `User` and `PAT` (with full repo access) for the API to be able to return a list of teams
 
-## Kubernetes
+### Kubernetes
 
 If you have a Kubernetes Cluster, we have a quick start guide that installs `Loki DB` and [Liatrio OTel Collector](https://github.com/liatrio/liatrio-otel-collector) (among a few other tools) that can be found [here](https://github.com/liatrio/tag-o11y-quick-start-manifests)
 
 This quick start manifest does not set up the [Liatrio DORA API](https://github.com/liatrio/liatrio-dora-api) or any other API which you would need to sit between this plugin and the Loki DB.
 
-## Configuring GitHub
+### Configuring GitHub
 
 Once you have the dependencies configured and running, you will need to update your GitHub Organization to send events to the OTel Collector.
 
@@ -95,7 +109,7 @@ You can do this by setting up a new `Webhook` and configuring the `Webhook` to s
 - Pull Requests
 - Deployment Statuses
 
-# Installation into Backstage
+## Installation into Backstage
 
 To Install this plugin you'll need to do the following:
 
@@ -136,10 +150,10 @@ To Install this plugin you'll need to do the following:
 
    ```typescript
    const doraContent = (
-   <Grid container spacing={3} alignItems="stretch">
-     {entityWarningContent}
-     <EntityDORACharts showTeamSelection={false} />
-   </Grid>
+     <Grid container spacing={3} alignItems="stretch">
+       {entityWarningContent}
+       <EntityDORACharts showTeamSelection={false} />
+     </Grid>
    );
    ```
 
@@ -219,6 +233,6 @@ To Install this plugin you'll need to do the following:
            - high: 24 (1 day or less)
            - medium: 168 (1 week or less)
 
-# Contributing
+## Contributing
 
 See [Contributing](./CONTRIBUTING) to Backstage Dora Plugin
