@@ -6,9 +6,10 @@ This is a plugin for the [Backstage](https://backstage.io/) Project that provide
 
 Our goal is to provide an Open Source plugin that works with the Open Telemetry backend collecting your DORA metrics in a non-opinionated manner.
 
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
 <!-- markdownlint-disable-next-line MD036 -->
 **This plugin is currently loosely tied to GitHub and Loki DB, we plan to expand to GitLab and other platforms in the future**
+<!-- prettier-ignore-end -->
 
 ## Plugin Architecture
 
