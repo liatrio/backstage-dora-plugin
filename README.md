@@ -117,7 +117,7 @@ You can do this by setting up a new `Webhook` and configuring the `Webhook` to s
 - Pull Requests
 - Deployment Statuses
 
-## Installation into Backstage (live)
+## Installation into Backstage
 
 To Install this plugin you'll need to do the following:
 
@@ -240,10 +240,6 @@ To Install this plugin you'll need to do the following:
            - elite: 1 (1 hr or less)
            - high: 24 (1 day or less)
            - medium: 168 (1 week or less)
-
-## Installation into Backstage (local)
-
-To Install this plugin locally for debugging/testing you'll need to do the following:
 
 ## Contributing
 
