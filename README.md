@@ -98,7 +98,7 @@ You will also need to log into the Github Container Registry to pull down requir
 echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
 ```
 
-Grafana will be available at `http://localhost:3000`. To sign in for the first time refer to [this doc](https://grafana.com/docs/grafana/latest/setup-grafana/sign-in-to-grafana/)
+If needed, Grafana will be available at `http://localhost:3000`. To sign in for the first time refer to [this doc](https://grafana.com/docs/grafana/latest/setup-grafana/sign-in-to-grafana/)
 
 ### Kubernetes
 
