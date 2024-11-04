@@ -187,7 +187,7 @@ To Install this plugin you'll need to do the following:
      - Required:
 
        - `dataEndpoint`: This the endpoint on the proxy that provides the deployment data. If you are using the `liatrio-dora-api` this will be `data`
-       - `teamListEndpiont`: This the endpoint on the proxy that provides the team and repo ownership data. If you are using the `liatrio-dora-api` this will be `teams`
+       - `teamListEndpoint`: This the endpoint on the proxy that provides the team and repo ownership data. If you are using the `liatrio-dora-api` this will be `teams`
        - `daysToFetch`: This is the number of days worth of data that will be fetched for the charts to have available for display
 
      - Optional:
