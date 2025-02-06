@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.8...v1.0.9) (2025-02-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @liatrio/react-dora-charts to v1.1.10 ([#47](https://github.com/liatrio/backstage-dora-plugin/issues/47)) ([d7d4fc5](https://github.com/liatrio/backstage-dora-plugin/commit/d7d4fc5bbfc533ddd18589e4fdbd3bea722bb7eb))
+
 ## [1.0.8](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.7...v1.0.8) (2024-09-20)
 
 
