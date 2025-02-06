@@ -1,0 +1,85 @@
+version: '3'
+
+vars:
+  BACKSTAGE_CLI: backstage-cli package
+
+tasks:
+  default:
+    desc: Display available tasks
+    cmds:
+      - task -l
+    silent: true
+
+  start:
+    desc: Start the development server
+    cmds:
+      - '{{.BACKSTAGE_CLI}} start'
+
+  build:
+    desc: Build the plugin for distribution
+    cmds:
+      - '{{.BACKSTAGE_CLI}} build'
+
+  lint:
+    desc: Run ESLint checks
+    cmds:
+      - '{{.BACKSTAGE_CLI}} lint'
+
+  lint:all:
+    desc: Run all linting and formatting checks
+    deps: [lint]
+    cmds:
+      - task: prettier:check
+
+  test:
+    desc: Run test suite
+    cmds:
+      - '{{.BACKSTAGE_CLI}} test'
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - '{{.BACKSTAGE_CLI}} clean'
+
+  prepack:
+    desc: Prepare package for distribution
+    cmds:
+      - '{{.BACKSTAGE_CLI}} prepack'
+
+  postpack:
+    desc: Post-packaging cleanup
+    cmds:
+      - '{{.BACKSTAGE_CLI}} postpack'
+
+  prettier:check:
+    desc: Check code formatting
+    cmds:
+      - npx --yes prettier --check .
+
+  prettier:fix:
+    desc: Fix code formatting
+    cmds:
+      - npx --yes prettier --write .
+
+  tsc:full:
+    desc: Run full TypeScript compilation
+    cmds:
+      - tsc --skipLibCheck true --incremental false
+
+  prepare:
+    desc: Set up git hooks with Husky
+    cmds:
+      - husky
+
+  dev:
+    desc: Start development environment
+    deps: [clean]
+    cmds:
+      - task: start
+
+  verify:
+    desc: Run all verification checks
+    cmds:
+      - task: lint:all
+      - task: test
+      - task: tsc:full
