@@ -92,6 +92,14 @@ In the `dependencies` folder, you will find a docker-compose file. Using this wi
 
 You will need to update the `.env` file with your `GitHub Org`, `User` and `PAT` (with full repo access) for the API to be able to return a list of teams
 
+You will also need to log into the Github Container Registry to pull down required images
+
+```bash
+echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
+```
+
+If needed, Grafana will be available at `http://localhost:3000`. To sign in for the first time refer to [this doc](https://grafana.com/docs/grafana/latest/setup-grafana/sign-in-to-grafana/)
+
 ### Kubernetes
 
 If you have a Kubernetes Cluster, we have a quick start guide that installs `Loki DB` and [Liatrio OTel Collector](https://github.com/liatrio/liatrio-otel-collector) (among a few other tools) that can be found [here](https://github.com/liatrio/tag-o11y-quick-start-manifests)
