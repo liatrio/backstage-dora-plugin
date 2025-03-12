@@ -26,7 +26,7 @@ services:
       LOKI_STORAGE_PATH: /loki
 
   promtail:
-    image: grafana/promtail:2.9.1
+    image: grafana/promtail:2.9.13
     platform: linux/amd64
     volumes:
       - /var/log:/var/log
