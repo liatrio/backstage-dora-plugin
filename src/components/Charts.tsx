@@ -129,7 +129,17 @@ const defaultMetrics: DoraState = {
 
 export const Charts = (props: ChartProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const entity = props.showServiceSelection ? null : useEntity();
+  let entity = null;
+  try {
+    // Only try to use entity context if not in service selection mode
+    if (!props.showServiceSelection) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const entityContext = useEntity();
+      entity = entityContext.entity;
+    }
+  } catch (error) {
+    // Entity context not available, continue in service selection mode
+  }
   const configApi = useApi(configApiRef);
   const backendUrl = configApi.getString('backend.baseUrl');
   const dataEndpoint = configApi.getString('dora.dataEndpoint');
