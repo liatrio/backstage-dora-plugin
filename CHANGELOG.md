@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/liatrio/backstage-dora-plugin/compare/v1.1.1...v1.1.2) (2025-04-01)
+
+
+### Bug Fixes
+
+* add fallback for service selection ([#59](https://github.com/liatrio/backstage-dora-plugin/issues/59)) ([acd6172](https://github.com/liatrio/backstage-dora-plugin/commit/acd6172079454e0fa34cde33afd4a91cd178c708))
+
 ## [1.1.1](https://github.com/liatrio/backstage-dora-plugin/compare/v1.1.0...v1.1.1) (2025-04-01)
 
 
