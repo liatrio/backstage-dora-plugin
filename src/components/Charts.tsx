@@ -24,7 +24,6 @@ import { useApi, configApiRef } from '@backstage/core-plugin-api';
 import {
   COLOR_DARK,
   COLOR_LIGHT,
-  fetchServices,
   useAuthHeaderValueLookup,
   getRepositoryName,
 } from '../helper';
@@ -249,14 +248,15 @@ export const Charts = (props: ChartProps) => {
 
   const fetchServicesData = async (
     url: string,
-    getAuthHeader: () => string,
+    getAuthHeader: () => string | Promise<string | undefined>,
     onSuccess: (data: any) => void,
     onError: (error: any) => void,
   ) => {
     try {
+      const authHeader = await Promise.resolve(getAuthHeader());
       const response = await fetch(url, {
         headers: {
-          Authorization: getAuthHeader(),
+          Authorization: authHeader || '',
         },
       });
 
