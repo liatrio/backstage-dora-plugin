@@ -6,11 +6,11 @@ export interface Config {
    */
   dora: {
     dataEndpoint: string;
-    teamListEndpoint: string;
+    serviceListEndpoint: string;
     daysToFetch: number;
     includeWeekends?: boolean;
     showDetails?: boolean;
-    teams?: string[];
+    services?: string[];
     showTrendGraph?: boolean;
     showIndividualTrends?: boolean;
     rankThresholds?: {
