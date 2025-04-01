@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.9...v1.1.0) (2025-04-01)
+
+
+### Features
+
+* change team to service ([#56](https://github.com/liatrio/backstage-dora-plugin/issues/56)) ([dcb7c4a](https://github.com/liatrio/backstage-dora-plugin/commit/dcb7c4ade419698b86678f774fb106655bbd556c))
+
 ## [1.0.9](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.8...v1.0.9) (2025-02-06)
 
 
