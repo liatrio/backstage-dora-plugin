@@ -4,3 +4,4 @@ dist-types
 dist
 .env
 coverage
+dependencies/.env
