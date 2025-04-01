@@ -26,7 +26,7 @@ Our goal is to provide an Open Source plugin that works with the Open Telemetry 
 
 ### `At A Glance`
 
-This offers you a quick view of the state of a component or team.
+This offers you a quick view of the state of a component or service.
 
 Depending on how you have set up your configuration for this plugin, it will show:
 
@@ -57,14 +57,14 @@ Here are some examples:
 
 This is a set of charts that for the DORA metrics.
 
-It has two different modes `Team View` and `Component View`:
+It has two different modes `Service View` and `Component View`:
 
 - `Component View` - You will see this when you access a specific Component in the Catalog.
-- `Team View` - You will see this when you access the `DORA Metrics` sidebar navigation.
+- `Service View` - You will see this when you access the `DORA Metrics` sidebar navigation.
 
 Here are some examples:
 
-| Component View                                                                                                                 | Team View                                                                                                                      |
+| Component View                                                                                                                 | Service View                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/teamView.png?raw=true 'Trend') |
 
