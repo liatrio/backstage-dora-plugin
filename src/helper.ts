@@ -28,7 +28,7 @@ export const useAuthHeaderValueLookup = () => {
   };
 };
 
-export const fetchTeams = async (
+export const fetchServices = async (
   url: string,
   getAuthHeaderValue: () => Promise<string | undefined>,
   onSuccess: (data: any) => void,

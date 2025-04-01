@@ -24,7 +24,7 @@ import { useApi, configApiRef } from '@backstage/core-plugin-api';
 import {
   COLOR_DARK,
   COLOR_LIGHT,
-  fetchTeams,
+  fetchServices,
   useAuthHeaderValueLookup,
   getRepositoryName,
 } from '../helper';
@@ -110,7 +110,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export interface ChartProps {
-  showTeamSelection?: boolean;
+  showServiceSelection?: boolean;
 }
 
 const defaultMetric = {
@@ -130,14 +130,14 @@ const defaultMetrics: DoraState = {
 
 export const Charts = (props: ChartProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const entity = props.showTeamSelection ? null : useEntity();
+  const entity = props.showServiceSelection ? null : useEntity();
   const configApi = useApi(configApiRef);
   const backendUrl = configApi.getString('backend.baseUrl');
   const dataEndpoint = configApi.getString('dora.dataEndpoint');
-  const teamListEndpoint = configApi.getString('dora.teamListEndpoint');
+  const serviceListEndpoint = configApi.getString('dora.serviceListEndpoint');
   const includeWeekends = configApi.getOptionalBoolean('dora.includeWeekends');
   const showDetails = configApi.getOptionalBoolean('dora.showDetails');
-  const teamsList = configApi.getOptional('dora.teams') as string[];
+  const servicesList = configApi.getOptional('dora.services') as string[];
   const showTrendGraph = configApi.getOptionalBoolean('dora.showTrendGraph');
   const showIndividualTrends = configApi.getOptionalBoolean(
     'dora.showIndividualTrends',
@@ -150,10 +150,10 @@ export const Charts = (props: ChartProps) => {
   const getAuthHeaderValue = useAuthHeaderValueLookup();
 
   const apiUrl = `${backendUrl}/api/proxy/dora/api/${dataEndpoint}`;
-  const teamListUrl = `${backendUrl}/api/proxy/dora/api/${teamListEndpoint}`;
+  const serviceListUrl = `${backendUrl}/api/proxy/dora/api/${serviceListEndpoint}`;
 
-  const [teamIndex, setTeamIndex] = useState<number>(0);
-  const [teams, setTeams] = useState<any[]>([
+  const [serviceIndex, setServiceIndex] = useState<number>(0);
+  const [services, setServices] = useState<any[]>([
     {
       value: '',
       label: 'Please Select',
@@ -230,7 +230,7 @@ export const Charts = (props: ChartProps) => {
     }
   };
 
-  const makeFetchOptions = (team?: string, repositories?: string[]) => {
+  const makeFetchOptions = (service?: string, repositories?: string[]) => {
     const fetchOptions: any = {
       api: apiUrl,
       getAuthHeaderValue: getAuthHeaderValue,
@@ -238,17 +238,41 @@ export const Charts = (props: ChartProps) => {
       end: getDateDaysInPastUtc(0),
     };
 
-    if (!props.showTeamSelection) {
+    if (!props.showServiceSelection) {
       fetchOptions.repositories = repositories!;
     } else {
-      fetchOptions.team = team;
+      fetchOptions.service = service;
     }
 
     return fetchOptions;
   };
 
+  const fetchServicesData = async (
+    url: string,
+    getAuthHeader: () => string,
+    onSuccess: (data: any) => void,
+    onError: (error: any) => void,
+  ) => {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: getAuthHeader(),
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error fetching services: ${response.statusText}`);
+      }
+
+      const responseData = await response.json();
+      onSuccess(responseData);
+    } catch (error) {
+      onError(error);
+    }
+  };
+
   const callFetchData = async (idx: number, repo: string) => {
-    const fetchOptions = makeFetchOptions(teams[idx]?.value, [repo]);
+    const fetchOptions = makeFetchOptions(services[idx]?.value, [repo]);
 
     setLoading(true);
 
@@ -264,19 +288,19 @@ export const Charts = (props: ChartProps) => {
     );
   };
 
-  const updateTeam = async (value: any) => {
-    const newIndex = teams.findIndex(
+  const updateService = async (value: any) => {
+    const newIndex = services.findIndex(
       (range: { value: string; label: string }) => range.label === value.label,
     );
 
-    setTeamIndex(newIndex);
+    setServiceIndex(newIndex);
 
     if (!startDate || !endDate) {
       return;
     }
 
     if (newIndex === 0) {
-      updateData(null, undefined, undefined, 'Please select a Team');
+      updateData(null, undefined, undefined, 'Please select a Service');
       return;
     }
 
@@ -294,7 +318,7 @@ export const Charts = (props: ChartProps) => {
     if (
       !newStartDate ||
       !newEndDate ||
-      (props.showTeamSelection && teamIndex === 0)
+      (props.showServiceSelection && serviceIndex === 0)
     ) {
       return;
     }
@@ -308,7 +332,7 @@ export const Charts = (props: ChartProps) => {
 
     let repositoryName = '';
 
-    if (!props.showTeamSelection) {
+    if (!props.showServiceSelection) {
       repositoryName = getRepositoryName(entity);
       setRepository(repositoryName);
 
@@ -318,34 +342,34 @@ export const Charts = (props: ChartProps) => {
       }
     }
 
-    const fetch = props.showTeamSelection
+    const fetch = props.showServiceSelection
       ? async () => {
-          if (teamsList && teamsList.length > 0) {
-            const teamEntries = [
+          if (servicesList && servicesList.length > 0) {
+            const serviceEntries = [
               {
                 value: '',
                 label: 'Please Select',
               },
             ];
 
-            for (const team of teamsList) {
-              teamEntries.push({
-                value: team,
-                label: team,
+            for (const service of servicesList) {
+              serviceEntries.push({
+                value: service,
+                label: service,
               });
             }
 
-            setMessage('Please select a Team');
+            setMessage('Please select a Service');
             setLoading(false);
-            setTeams(teamEntries);
+            setServices(serviceEntries);
           } else {
-            fetchTeams(
-              teamListUrl,
+            fetchServicesData(
+              serviceListUrl,
               getAuthHeaderValue,
-              (teams_data: any) => {
+              (services_data: any) => {
                 const newList: any[] = [{ label: 'Please Select', value: '' }];
 
-                for (const entry of teams_data.teams) {
+                for (const entry of services_data.services) {
                   const newEntry = {
                     label: entry,
                     value: entry,
@@ -354,7 +378,7 @@ export const Charts = (props: ChartProps) => {
                   newList.push(newEntry);
                 }
 
-                setTeams(newList);
+                setServices(newList);
                 setLoading(false);
               },
               _ => {
@@ -364,14 +388,14 @@ export const Charts = (props: ChartProps) => {
           }
         }
       : async () => {
-          callFetchData(teamIndex, repositoryName);
+          callFetchData(serviceIndex, repositoryName);
         };
 
     fetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (repository === '' && !props.showTeamSelection) {
+  if (repository === '' && !props.showServiceSelection) {
     return (
       <div>DORA Metrics are not available for Non-GitHub repos currently</div>
     );
@@ -428,7 +452,7 @@ export const Charts = (props: ChartProps) => {
     />
   );
 
-  const containerClass = props.showTeamSelection
+  const containerClass = props.showServiceSelection
     ? `${classes.doraContainer} ${classes.pageView}`
     : classes.doraContainer;
 
@@ -483,7 +507,7 @@ export const Charts = (props: ChartProps) => {
                     popperPlacement="bottom"
                   />
                 </div>
-                {props.showTeamSelection && (
+                {props.showServiceSelection && (
                   <div
                     style={{
                       width: '50%',
@@ -492,11 +516,13 @@ export const Charts = (props: ChartProps) => {
                       justifyContent: 'center',
                     }}
                   >
-                    <span style={{ paddingRight: '10px' }}>Select Team:</span>
+                    <span style={{ paddingRight: '10px' }}>
+                      Select Service:
+                    </span>
                     <Dropdown
-                      options={teams}
-                      onChange={updateTeam}
-                      value={teams[teamIndex]}
+                      options={services}
+                      onChange={updateService}
+                      value={services[serviceIndex]}
                     />
                   </div>
                 )}
