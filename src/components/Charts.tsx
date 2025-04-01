@@ -129,7 +129,7 @@ const defaultMetrics: DoraState = {
 
 export const Charts = (props: ChartProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  let entity = null;
+  let entity: any = null;
   try {
     // Only try to use entity context if not in service selection mode
     if (!props.showServiceSelection) {
