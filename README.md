@@ -64,9 +64,9 @@ It has two different modes `Service View` and `Component View`:
 
 Here are some examples:
 
-| Component View                                                                                                                 | Service View                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/teamView.png?raw=true 'Trend') |
+| Component View                                                                                                                 | Service View                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/serviceView.png?raw=true 'Trend') |
 
 ## Dependencies
 
@@ -90,7 +90,7 @@ In the `dependencies` folder, you will find a docker-compose file. Using this wi
 - An instance of an OTel Collector configured to accept events from GitHub
 - An instance of the [Liatrio DORA API](https://github.com/liatrio/liatrio-dora-api), which this plugin can call to get the data it needs
 
-You will need to update the `.env` file with your `GitHub Org`, `User` and `PAT` (with full repo access) for the API to be able to return a list of teams
+You will need to update the `.env` file with your `GitHub Org`, `User` and `PAT` (with full repo access) for the API to be able to return a list of services
 
 ### Kubernetes
 
@@ -132,7 +132,7 @@ To Install this plugin you'll need to do the following:
    - Add this into the `FlatRoutes` element as a child:
 
    ```typescript
-   <Route path="/dora" element={<EntityDORACharts showTeamSelection />} />
+   <Route path="/dora" element={<EntityDORACharts showServiceSelection />} />
    ```
 
 3. Update the `/packages/app/src/components/catalog/EntityPage.tsx` file:
@@ -152,7 +152,7 @@ To Install this plugin you'll need to do the following:
    const doraContent = (
      <Grid container spacing={3} alignItems="stretch">
        {entityWarningContent}
-       <EntityDORACharts showTeamSelection={false} />
+       <EntityDORACharts showServiceSelection={false} />
      </Grid>
    );
    ```
@@ -187,7 +187,7 @@ To Install this plugin you'll need to do the following:
      - Required:
 
        - `dataEndpoint`: This the endpoint on the proxy that provides the deployment data. If you are using the `liatrio-dora-api` this will be `data`
-       - `teamListEndpoint`: This the endpoint on the proxy that provides the team and repo ownership data. If you are using the `liatrio-dora-api` this will be `teams`
+       - `serviceListEndpoint`: This the endpoint on the proxy that provides the service and repo ownership data. If you are using the `liatrio-dora-api` this will be `services`
        - `daysToFetch`: This is the number of days worth of data that will be fetched for the charts to have available for display
 
      - Optional:
