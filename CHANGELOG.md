@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/liatrio/backstage-dora-plugin/compare/v1.1.0...v1.1.1) (2025-04-01)
+
+
+### Bug Fixes
+
+* update config and readme ([#58](https://github.com/liatrio/backstage-dora-plugin/issues/58)) ([094fd47](https://github.com/liatrio/backstage-dora-plugin/commit/094fd47342672407fec7d0f54f9a8aa2cd7ad471))
+
 ## [1.1.0](https://github.com/liatrio/backstage-dora-plugin/compare/v1.0.9...v1.1.0) (2025-04-01)
 
 
