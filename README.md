@@ -64,9 +64,9 @@ It has two different modes `Service View` and `Component View`:
 
 Here are some examples:
 
-| Component View                                                                                                                 | Service View                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/serviceView.png?raw=true 'Trend') |
+| Component View                                                                                                                 | Service View                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| ![Metrics](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/ranked/tab.png?raw=true 'Metrics') | ![Trend](https://raw.githubusercontent.com/liatrio/backstage-dora-plugin/main/screenshots/trend/teamView.png?raw=true 'Trend') |
 
 ## Dependencies
 
