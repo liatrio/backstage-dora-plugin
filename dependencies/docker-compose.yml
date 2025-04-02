@@ -34,7 +34,7 @@ services:
     command: -config.file=/etc/promtail/config.yaml
 
   otelcol:
-    image: ghcr.io/liatrio/liatrio-otel-collector:0.61.0-arm64
+    image: ghcr.io/liatrio/liatrio-otel-collector:0.89.0-arm64
     deploy:
       resources:
         limits:
