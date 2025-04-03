@@ -128,18 +128,10 @@ const defaultMetrics: DoraState = {
 };
 
 export const Charts = (props: ChartProps) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  let entity: any = null;
-  try {
-    // Only try to use entity context if not in service selection mode
-    if (!props.showServiceSelection) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const entityContext = useEntity();
-      entity = entityContext.entity;
-    }
-  } catch (error) {
-    // Entity context not available, continue in service selection mode
-  }
+  // Always call useEntity unconditionally
+  const entityContext = useEntity();
+  // Then conditionally use the result
+  const entity = props.showServiceSelection ? null : entityContext;
   const configApi = useApi(configApiRef);
   const backendUrl = configApi.getString('backend.baseUrl');
   const dataEndpoint = configApi.getString('dora.dataEndpoint');
@@ -267,6 +259,7 @@ export const Charts = (props: ChartProps) => {
       const response = await fetch(url, {
         headers: {
           Authorization: authHeader || '',
+          // 'Accept': 'application/json',
         },
       });
 
@@ -277,6 +270,7 @@ export const Charts = (props: ChartProps) => {
       const responseData = await response.json();
       onSuccess(responseData);
     } catch (error) {
+      // console.error('Error fetching services:', error);
       onError(error);
     }
   };
