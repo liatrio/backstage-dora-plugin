@@ -259,7 +259,6 @@ export const Charts = (props: ChartProps) => {
       const response = await fetch(url, {
         headers: {
           Authorization: authHeader || '',
-          // 'Accept': 'application/json',
         },
       });
 
@@ -270,7 +269,6 @@ export const Charts = (props: ChartProps) => {
       const responseData = await response.json();
       onSuccess(responseData);
     } catch (error) {
-      // console.error('Error fetching services:', error);
       onError(error);
     }
   };
