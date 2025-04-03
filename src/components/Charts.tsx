@@ -128,10 +128,20 @@ const defaultMetrics: DoraState = {
 };
 
 export const Charts = (props: ChartProps) => {
-  // Always call useEntity unconditionally
-  const entityContext = useEntity();
-  // Then conditionally use the result
-  const entity = props.showServiceSelection ? null : entityContext;
+  // Use try/catch to handle the case when entity context is not available
+  let entity = null;
+  try {
+    // Only call useEntity when we're not in standalone mode
+    if (!props.showServiceSelection) {
+      const { entity: contextEntity } = useEntity();
+      entity = contextEntity;
+    }
+  } catch (error) {
+    // Entity context not available, which is fine in standalone mode
+    if (!props.showServiceSelection) {
+      throw error; // Re-throw if we're not in service selection mode
+    }
+  }
   const configApi = useApi(configApiRef);
   const backendUrl = configApi.getString('backend.baseUrl');
   const dataEndpoint = configApi.getString('dora.dataEndpoint');
