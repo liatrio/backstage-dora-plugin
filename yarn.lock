@@ -1367,9 +1367,7 @@
     "@backstage/types" "^1.1.1"
 
 "@backstage/core-app-api@^1.12.3", "@backstage/core-app-api@^1.14.2":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@backstage/core-app-api/-/core-app-api-1.14.2.tgz#e41176d84aaaefec68446f3ca39bc38e4c15729b"
-  integrity sha512-WdhUOzPqa4JXIBDbpTS9eqabR3MgIrAfX0YAFGFh8lA2awe1ZDrYOmkX1PQSR5j+4rrJZ4z8QUqZOgK+/j4UsQ==
+  version "1.16.0"
   dependencies:
     "@backstage/config" "^1.2.0"
     "@backstage/core-plugin-api" "^1.9.3"
@@ -1440,9 +1438,7 @@
     zod "^3.22.4"
 
 "@backstage/core-plugin-api@^1.9.1", "@backstage/core-plugin-api@^1.9.3":
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/@backstage/core-plugin-api/-/core-plugin-api-1.9.3.tgz#66b4b7dc620823c66b123c8a2d6db088e2936027"
-  integrity sha512-MV/RQv8nAPYVkVX926Z+VPW2W4ZzU9VN2s9NhWSWqoYuOzsmA4FgmfNDuwiPEAUKW7AlVCGI4A0deUZ22Orgyw==
+  version "1.10.5"
   dependencies:
     "@backstage/config" "^1.2.0"
     "@backstage/errors" "^1.2.4"
@@ -1452,9 +1448,7 @@
     history "^5.0.0"
 
 "@backstage/dev-utils@^1.0.26":
-  version "1.0.37"
-  resolved "https://registry.yarnpkg.com/@backstage/dev-utils/-/dev-utils-1.0.37.tgz#a9e3a3a6d4a49bc75a79e682a1e4c2c69de5f2c9"
-  integrity sha512-e1W7Hw/tpAVKb5fcw/pHSZjAOFRKSl9gXdePvGLxZvDMeOKlROhRCv0bjHfIvhQ7GiKGjemY8SDJOvHM0YZYiA==
+  version "1.1.8"
   dependencies:
     "@backstage/app-defaults" "^1.5.10"
     "@backstage/catalog-model" "^1.6.0"
@@ -1537,9 +1531,7 @@
     "@backstage/plugin-search-common" "^1.2.14"
 
 "@backstage/plugin-catalog-react@^1.12.3":
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/@backstage/plugin-catalog-react/-/plugin-catalog-react-1.12.3.tgz#f33400aef73799875d17b0b118f8502a87cb4b4f"
-  integrity sha512-jBb1m8YBjjK9O9/Klz3bnCrJLZcgYa94Gj61PcKLDNStWxXUn7XgJQMabWCNGByckXt8E4hUYdVdTp1StYL/1g==
+  version "1.16.0"
   dependencies:
     "@backstage/catalog-client" "^1.6.6"
     "@backstage/catalog-model" "^1.6.0"
@@ -1607,9 +1599,7 @@
     cross-fetch "^4.0.0"
 
 "@backstage/test-utils@^1.5.0":
-  version "1.5.10"
-  resolved "https://registry.yarnpkg.com/@backstage/test-utils/-/test-utils-1.5.10.tgz#ecebb5aa133b3888c0742ac811431a05193388db"
-  integrity sha512-HCTDVqxKqbosXtXjKFgsw4DWwy7mg9SpZcZYURbpX5hGuE8nE9qzzBwmNztFDSqgaYz5Ibkqjuxo1Ve/KVP6lw==
+  version "1.7.6"
   dependencies:
     "@backstage/config" "^1.2.0"
     "@backstage/core-app-api" "^1.14.2"
