@@ -15,7 +15,7 @@ services:
     env_file: .env
 
   loki:
-    image: grafana/loki:3.0.1
+    image: grafana/loki:3.4.3
     platform: linux/amd64
     ports:
       - '3100:3100'
