@@ -5,8 +5,13 @@ export const COLOR_DARK = '#000';
 export const COLOR_LIGHT = '#FFF';
 
 export const getRepositoryName = (e: any): string => {
-  if ('github.com/project-slug' in e.entity.metadata.annotations) {
-    return e.entity.metadata.annotations['github.com/project-slug'].split(
+  // Handle both direct entity objects and objects containing an entity property
+  const entity = e.entity || e;
+  
+  // Safely access annotations with null checks
+  if (entity && entity.metadata && entity.metadata.annotations && 
+      'github.com/project-slug' in entity.metadata.annotations) {
+    return entity.metadata.annotations['github.com/project-slug'].split(
       '/',
     )[1];
   }

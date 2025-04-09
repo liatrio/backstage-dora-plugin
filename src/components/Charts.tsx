@@ -128,10 +128,20 @@ const defaultMetrics: DoraState = {
 };
 
 export const Charts = (props: ChartProps) => {
-  // Always call useEntity unconditionally
-  const entityContext = useEntity();
-  // Then conditionally use the result
-  const entity = props.showServiceSelection ? null : entityContext;
+  // Use try/catch to handle the case when entity context is not available
+  let entity: any = null;
+  try {
+    // Only call useEntity when we're not in standalone mode
+    if (!props.showServiceSelection) {
+      const { entity: contextEntity } = useEntity();
+      entity = contextEntity;
+    }
+  } catch (error) {
+    // Entity context not available, which is fine in standalone mode
+    if (!props.showServiceSelection) {
+      throw error; // Re-throw if we're not in service selection mode
+    }
+  }
   const configApi = useApi(configApiRef);
   const backendUrl = configApi.getString('backend.baseUrl');
   const dataEndpoint = configApi.getString('dora.dataEndpoint');
@@ -240,9 +250,12 @@ export const Charts = (props: ChartProps) => {
     };
 
     if (!props.showServiceSelection) {
+      // When not in service selection mode, use the entity name as service
+      fetchOptions.service = entity?.metadata?.name || '';
       fetchOptions.repositories = repositories!;
     } else {
-      fetchOptions.service = service;
+      // In service selection mode, use the provided service name
+      fetchOptions.service = service || '';
     }
 
     return fetchOptions;
@@ -255,20 +268,27 @@ export const Charts = (props: ChartProps) => {
     onError: (error: any) => void,
   ) => {
     try {
+      console.log('Fetching services from URL:', url);
       const authHeader = await Promise.resolve(getAuthHeader());
+      console.log('Auth header available:', !!authHeader);
+      
       const response = await fetch(url, {
         headers: {
           Authorization: authHeader || '',
         },
       });
 
+      console.log('Service list response status:', response.status, response.statusText);
+      
       if (!response.ok) {
         throw new Error(`Error fetching services: ${response.statusText}`);
       }
 
       const responseData = await response.json();
+      console.log('Service list data received:', responseData);
       onSuccess(responseData);
     } catch (error) {
+      console.error('Error fetching services:', error);
       onError(error);
     }
   };
@@ -346,7 +366,13 @@ export const Charts = (props: ChartProps) => {
 
     const fetch = props.showServiceSelection
       ? async () => {
+          // http://localhost:7007/api/proxy/dora/api/services
+          console.log('Service selection mode active');
+          console.log('Config servicesList:', servicesList);
+          console.log('Service list URL:', serviceListUrl);
+          
           if (servicesList && servicesList.length > 0) {
+            console.log('Using services from config:', servicesList);
             const serviceEntries = [
               {
                 value: '',
@@ -364,26 +390,36 @@ export const Charts = (props: ChartProps) => {
             setMessage('Please select a Service');
             setLoading(false);
             setServices(serviceEntries);
+            console.log('Services set from config:', serviceEntries);
           } else {
+            console.log('Fetching services from API');
             fetchServicesData(
               serviceListUrl,
               getAuthHeaderValue,
               (services_data: any) => {
+                console.log('Services data received:', services_data);
                 const newList: any[] = [{ label: 'Please Select', value: '' }];
 
-                for (const entry of services_data.services) {
-                  const newEntry = {
-                    label: entry,
-                    value: entry,
-                  };
+                if (services_data.services && services_data.services.length > 0) {
+                  console.log('Processing services:', services_data.services);
+                  for (const entry of services_data.services) {
+                    const newEntry = {
+                      label: entry,
+                      value: entry,
+                    };
 
-                  newList.push(newEntry);
+                    newList.push(newEntry);
+                  }
+                } else {
+                  console.warn('No services found in response');
                 }
 
+                console.log('Setting services:', newList);
                 setServices(newList);
                 setLoading(false);
               },
-              _ => {
+              error => {
+                console.error('Error in service list callback:', error);
                 setLoading(false);
               },
             );
