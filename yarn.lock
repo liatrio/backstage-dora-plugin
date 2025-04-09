@@ -2299,10 +2299,9 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz#4fc56c15c580b9adb7dc3c333a134e540b44bfb1"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
-"@liatrio/react-dora-charts@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@liatrio/react-dora-charts/-/react-dora-charts-2.0.0.tgz#3421560ff01dfe9fa83d4c93d3d348ef0cea2d49"
-  integrity sha512-Mr8pna9m/emGlc1g/JYxPeZ8VJMixqjnI4ZxRBfx/rUNjLyhDaR66/dxIoK3oDf9X0eT080jeN1KB9h3BVEfqg==
+"@liatrio/react-dora-charts@file:./liatrio-react-dora-charts-v0.0.18.tgz":
+  version "0.0.18"
+  resolved "file:./liatrio-react-dora-charts-v0.0.18.tgz#74a3afc10233639a0fb27aa0be4f13755660bc15"
   dependencies:
     js-yaml "^4.1.0"
     react-tooltip "^5.28.0"

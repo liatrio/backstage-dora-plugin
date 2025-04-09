@@ -4,3 +4,7 @@ dist-types
 dist
 .env
 coverage
+
+# Local dev
+*.tgz
+tmp.*.json

@@ -129,7 +129,7 @@ const defaultMetrics: DoraState = {
 
 export const Charts = (props: ChartProps) => {
   // Use try/catch to handle the case when entity context is not available
-  let entity = null;
+  let entity: any = null;
   try {
     // Only call useEntity when we're not in standalone mode
     if (!props.showServiceSelection) {
