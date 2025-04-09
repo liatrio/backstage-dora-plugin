@@ -250,9 +250,12 @@ export const Charts = (props: ChartProps) => {
     };
 
     if (!props.showServiceSelection) {
+      // When not in service selection mode, use the entity name as service
+      fetchOptions.service = entity?.metadata?.name || '';
       fetchOptions.repositories = repositories!;
     } else {
-      fetchOptions.service = service;
+      // In service selection mode, use the provided service name
+      fetchOptions.service = service || '';
     }
 
     return fetchOptions;
@@ -278,29 +281,6 @@ export const Charts = (props: ChartProps) => {
       console.log('Service list response status:', response.status, response.statusText);
       
       if (!response.ok) {
-        // If proxy fails, try direct connection as fallback
-        if (response.status === 504) {
-          console.log('Proxy timeout, trying direct connection to API');
-          try {
-            const directResponse = await fetch('http://localhost:8080/v1/services', {
-              headers: {
-                'Accept': 'application/json',
-              },
-            });
-            
-            console.log('Direct API response:', directResponse.status, directResponse.statusText);
-            
-            if (directResponse.ok) {
-              const directData = await directResponse.json();
-              console.log('Direct API data:', directData);
-              onSuccess(directData);
-              return;
-            }
-          } catch (directError) {
-            console.error('Direct API connection failed:', directError);
-            // Continue with the original error
-          }
-        }
         throw new Error(`Error fetching services: ${response.statusText}`);
       }
 
