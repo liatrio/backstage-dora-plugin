@@ -7,4 +7,5 @@ metadata:
 spec:
   type: other
   lifecycle: unknown
+  system: system:default/backstage
   owner: backstage-foundations
