@@ -2603,9 +2603,7 @@
     react-transition-group "^4.4.5"
 
 "@mui/material@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@mui/material/-/material-6.1.0.tgz#42c900df9667f58d10082eafdae0cb99ea43339b"
-  integrity sha512-4MJ46vmy1xbm8x+ZdRcWm8jEMMowdS8pYlhKQzg/qoKhOcLhImZvf2Jn6z9Dj6gl+lY+C/0MxaHF/avAAGys3Q==
+  version "6.5.0"
   dependencies:
     "@babel/runtime" "^7.25.6"
     "@mui/core-downloads-tracker" "^6.1.0"
